@@ -1,8 +1,9 @@
 import * as React from "react";
 import {Component, Props} from "react";
 import {Player} from "../model";
-import {Grid, PageHeader, Row, Table} from "react-bootstrap";
+import {Grid, PageHeader, Row} from "react-bootstrap";
 import {draftAPI} from "../api";
+import ReactTable from "react-table";
 
 interface IPlayersState {
     players: Player[];
@@ -31,21 +32,45 @@ export class Players extends Component<Props<any>, IPlayersState> {
             players = [];
         }
 
-        const playerRows = players.map((player: Player, idx) => {
-            return (
-                <tr key={player.id}>
-                    <td><a href={player.url} target='_blank'>{player.lastname}, {player.firstname}</a></td>
-                    <td>{player.position}</td>
-                    <td>{player.team}</td>
-                    <td>{player.rank}</td>
-                    <td>{player.points}</td>
-                    <td>{player.byeweek}</td>
-                    <td>{player.avgpick}</td>
-                    <td>R {player.round}, P {player.pick}</td>
-                    <td>{player.fantasyteam}  ({player.owner})</td>
-                </tr>
-            );
-        });
+        const columns = [{
+            Header: 'Player',
+            accessor: 'lastname',
+            Cell: (props: any) =>
+                <a href={props.original.url} target='_blank'>{props.original.lastname}, {props.original.firstname}</a>
+        }, {
+            Header: 'Position',
+            accessor: 'position',
+        }, {
+            Header: 'Team',
+            accessor: 'team'
+        }, {
+            Header: 'Rank',
+            accessor: 'rank'
+        }, {
+            Header: 'Points',
+            accessor: 'points'
+        }, {
+            Header: 'Bye',
+            accessor: 'byeweek'
+        }, {
+            Header: 'ADP',
+            accessor: 'avgpick'
+        }, {
+            Header: 'R, P',
+            accessor: 'round',
+            Cell: (props: any) => <span>R {props.original.round}, P {props.original.pick}</span>
+        }, {
+            Header: 'Fantasy Team',
+            accessor: 'fantasyteam',
+            Cell: (props: any) => <span>{props.original.fantasyteam} ({props.original.owner})</span>
+        }, {
+            Header: '',
+            accessor: 'button',
+            sortable: false,
+            Cell: (props: any) => <button className="btn btn-default">Edit</button>
+        }];
+
+        const tbodyProps = () => ({className: "table-striped"});
 
         return (
             <Grid>
@@ -53,24 +78,19 @@ export class Players extends Component<Props<any>, IPlayersState> {
                     <PageHeader>Players</PageHeader>
                 </Row>
                 <Row>
-                    <Table striped={true}>
-                        <thead>
-                        <tr>
-                            <th>Player</th>
-                            <th>Pos</th>
-                            <th>Team</th>
-                            <th>Rank</th>
-                            <th>Points</th>
-                            <th>Bye</th>
-                            <th>ADP</th>
-                            <th>R, P</th>
-                            <th>Fantasy Team</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {playerRows}
-                        </tbody>
-                    </Table>
+                    <ReactTable
+                        columns={columns}
+                        data={players}
+                        resizable={false}
+                        defaultSorted={[
+                            {
+                                id: "rank",
+                                asc: true
+                            }
+                        ]}
+                        defaultPageSize={10}
+                        getTbodyProps={tbodyProps}
+                    />
                 </Row>
             </Grid>
         );
