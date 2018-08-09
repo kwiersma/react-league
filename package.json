@@ -4,10 +4,13 @@
   "private": true,
   "proxy": "http://localhost:8000",
   "dependencies": {
+    "@types/react-router-dom": "^4.3.0",
     "bootstrap": "^3.3.7",
     "react": "^16.4.2",
     "react-bootstrap": "^0.32.1",
     "react-dom": "^16.4.2",
+    "react-router-bootstrap": "^0.24.4",
+    "react-router-dom": "^4.3.1",
     "react-scripts-ts": "2.17.0"
   },
   "scripts": {

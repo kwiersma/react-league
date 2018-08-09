@@ -12,6 +12,7 @@
     ]
   },
   "rules": {
-    "ordered-imports": false
+    "ordered-imports": false,
+    "max-classes-per-file": false
   }
 }
