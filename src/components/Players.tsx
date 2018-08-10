@@ -1,13 +1,15 @@
 import * as React from "react";
 import {Component, Props} from "react";
 import {Player} from "../model";
-import {Grid, PageHeader, Row} from "react-bootstrap";
+import {Grid, Row} from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import {draftAPI} from "../api";
+import {PlayerFilter} from "./PlayerFilter";
 
 interface IPlayersState {
     players: Player[];
+    filteredPlayers: Player[];
 }
 
 export class Players extends Component<Props<any>, IPlayersState> {
@@ -17,20 +19,31 @@ export class Players extends Component<Props<any>, IPlayersState> {
 
         this.state = {
             players: [],
+            filteredPlayers: []
         };
     }
 
     public componentDidMount() {
         draftAPI.getPlayers().then((players: Player[]) => {
-            this.setState({players});
+            this.setState({players, filteredPlayers: players});
         });
     }
 
-    public render() {
-        let {players} = this.state;
+    public filterPlayers = (lastname: string) => {
+        let filteredPlayers = this.state.players;
+        filteredPlayers = filteredPlayers.filter((player) => {
+            return player.lastname.toLowerCase().startsWith(lastname.toLowerCase())
+        });
+        this.setState({
+            filteredPlayers
+        })
+    };
 
-        if (players === undefined) {
-            players = [];
+    public render() {
+        let {filteredPlayers} = this.state;
+
+        if (filteredPlayers === undefined) {
+            filteredPlayers = [];
         }
 
         const playerNameFormatter = (cell: any, row: any) => {
@@ -158,16 +171,16 @@ export class Players extends Component<Props<any>, IPlayersState> {
         return (
             <Grid>
                 <Row>
-                    <PageHeader>Players</PageHeader>
+                    <PlayerFilter onChange={this.filterPlayers}/>
                 </Row>
                 <Row>
                     <BootstrapTable
                         keyField='id'
-                        data={players}
+                        data={filteredPlayers}
                         columns={columns}
                         defaultSorted={defaultSorted}
                         pagination={paginationFactory()}
-                        bordered={false} striped={true} condensed={true} />
+                        bordered={false} striped={true} condensed={true}/>
                 </Row>
             </Grid>
         );
