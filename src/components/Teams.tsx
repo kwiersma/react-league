@@ -33,7 +33,7 @@ export class Teams extends Component<Props<any>, ITeamsState> {
 
         const teamRows = teams.map((team, idx) => {
             return (
-                <tr key={idx}>
+                <tr key={team.id}>
                     <td>{team.draftorder}</td>
                     <td>{team.name}</td>
                     <td>{team.owner}</td>

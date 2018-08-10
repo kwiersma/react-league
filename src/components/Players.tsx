@@ -1,7 +1,9 @@
 import * as React from "react";
 import {Component, Props} from "react";
 import {Player} from "../model";
-import {Grid, PageHeader, Row, Table} from "react-bootstrap";
+import {Grid, PageHeader, Row} from "react-bootstrap";
+import BootstrapTable from "react-bootstrap-table-next";
+import paginationFactory from 'react-bootstrap-table2-paginator';
 import {draftAPI} from "../api";
 
 interface IPlayersState {
@@ -31,21 +33,127 @@ export class Players extends Component<Props<any>, IPlayersState> {
             players = [];
         }
 
-        const playerRows = players.map((player: Player, idx) => {
+        const playerNameFormatter = (cell: any, row: any) => {
             return (
-                <tr key={player.id}>
-                    <td><a href={player.url} target='_blank'>{player.lastname}, {player.firstname}</a></td>
-                    <td>{player.position}</td>
-                    <td>{player.team}</td>
-                    <td>{player.rank}</td>
-                    <td>{player.points}</td>
-                    <td>{player.byeweek}</td>
-                    <td>{player.avgpick}</td>
-                    <td>R {player.round}, P {player.pick}</td>
-                    <td>{player.fantasyteam}  ({player.owner})</td>
-                </tr>
+                <a href={row.url} target='_blank'>{row.lastname}, {row.firstname}</a>
             );
-        });
+        };
+
+        const teamNameFormatter = (cell: any, row: any) => {
+            const team = row.fantasyteam ? <div>{row.fantasyteam} ({row.owner})</div> : null;
+            return (
+                <div>
+                    {team}
+                    <button className="btn btn-default">Edit</button>
+                </div>
+            );
+        };
+
+        const roundFormatter = (cell: any, row: any) => {
+            return (
+                <span>R {row.round} P {row.pick}</span>
+            );
+        };
+
+        const defaultSorted = [{
+            dataField: 'rank',
+            order: 'asc'
+        }];
+
+        const columns = [{
+            dataField: 'lastname',
+            text: 'Player',
+            sort: true,
+            formatter: playerNameFormatter,
+            style: {
+                width: '20%'
+            },
+            headerStyle: {
+                width: '20%'
+            }
+        }, {
+            dataField: 'position',
+            text: 'Pos',
+            sort: true,
+            style: {
+                width: '8%'
+            },
+            headerStyle: {
+                width: '8%'
+            }
+        }, {
+            dataField: 'team',
+            text: 'Team',
+            sort: true,
+            style: {
+                width: '8%'
+            },
+            headerStyle: {
+                width: '8%'
+            }
+        }, {
+            dataField: 'rank',
+            text: 'Rank',
+            sort: true,
+            style: {
+                width: '8%'
+            },
+            headerStyle: {
+                width: '8%'
+            }
+        }, {
+            dataField: 'points',
+            text: 'Points',
+            sort: true,
+            style: {
+                width: '8%'
+            },
+            headerStyle: {
+                width: '8%'
+            }
+        }, {
+            dataField: 'byeweek',
+            text: 'Bye',
+            sort: true,
+            style: {
+                width: '8%'
+            },
+            headerStyle: {
+                width: '8%'
+            }
+        }, {
+            dataField: 'avgpick',
+            text: 'ADP',
+            sort: true,
+            style: {
+                width: '8%'
+            },
+            headerStyle: {
+                width: '8%'
+            }
+        }, {
+            dataField: 'round',
+            text: 'R, P',
+            sort: true,
+            style: {
+                width: '8%'
+            },
+            headerStyle: {
+                width: '8%'
+            },
+            formatter: roundFormatter
+        }, {
+            dataField: 'fantasyteam',
+            text: 'Fantasy Team',
+            sort: true,
+            style: {
+                width: '20%'
+            },
+            headerStyle: {
+                width: '20%'
+            },
+            formatter: teamNameFormatter
+        }];
 
         return (
             <Grid>
@@ -53,24 +161,13 @@ export class Players extends Component<Props<any>, IPlayersState> {
                     <PageHeader>Players</PageHeader>
                 </Row>
                 <Row>
-                    <Table striped={true}>
-                        <thead>
-                        <tr>
-                            <th>Player</th>
-                            <th>Pos</th>
-                            <th>Team</th>
-                            <th>Rank</th>
-                            <th>Points</th>
-                            <th>Bye</th>
-                            <th>ADP</th>
-                            <th>R, P</th>
-                            <th>Fantasy Team</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {playerRows}
-                        </tbody>
-                    </Table>
+                    <BootstrapTable
+                        keyField='id'
+                        data={players}
+                        columns={columns}
+                        defaultSorted={defaultSorted}
+                        pagination={paginationFactory()}
+                        bordered={false} striped={true} condensed={true} />
                 </Row>
             </Grid>
         );
