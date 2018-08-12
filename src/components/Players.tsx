@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Component, Props} from "react";
+import {Component} from "react";
 import {Player} from "../model";
 import {Grid, Row} from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
@@ -12,9 +12,9 @@ interface IPlayersState {
     filteredPlayers: Player[];
 }
 
-export class Players extends Component<Props<any>, IPlayersState> {
+export class Players extends Component<{}, IPlayersState> {
 
-    constructor(props: Props<any>) {
+    constructor(props: {}) {
         super(props);
 
         this.state = {

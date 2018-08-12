@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Component, Props} from "react";
+import {Component} from "react";
 import {FantasyTeam} from "../model";
 import {Grid, PageHeader, Row, Table} from "react-bootstrap";
 import {draftAPI} from "../api";
@@ -8,9 +8,9 @@ interface ITeamsState {
     teams: FantasyTeam[];
 }
 
-export class Teams extends Component<Props<any>, ITeamsState> {
+export class Teams extends Component<{}, ITeamsState> {
 
-    constructor(props: Props<any>) {
+    constructor(props: {}) {
         super(props);
 
         this.state = {
