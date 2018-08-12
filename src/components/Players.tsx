@@ -5,7 +5,7 @@ import {Grid, Row} from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import {draftAPI} from "../api";
-import {PlayerFilter} from "./PlayerFilter";
+import {PlayerFilter, PlayersFilter} from "./PlayerFilter";
 
 interface IPlayersState {
     players: Player[];
@@ -29,10 +29,21 @@ export class Players extends Component<{}, IPlayersState> {
         });
     }
 
-    public filterPlayers = (lastname: string) => {
+    public filterPlayers = (playersFilter: PlayersFilter) => {
         let filteredPlayers = this.state.players;
         filteredPlayers = filteredPlayers.filter((player) => {
-            return player.lastname.toLowerCase().startsWith(lastname.toLowerCase())
+            let lastNameMatch = true;
+            if (playersFilter.lastname && playersFilter.lastname !== '') {
+                lastNameMatch = player.lastname.toLowerCase().startsWith(
+                    playersFilter.lastname.toLowerCase())
+            }
+
+            let positionMatch = true;
+            if (playersFilter.position && playersFilter.position !== '') {
+                positionMatch = player.position === playersFilter.position;
+            }
+
+            return lastNameMatch && positionMatch;
         });
         this.setState({
             filteredPlayers
