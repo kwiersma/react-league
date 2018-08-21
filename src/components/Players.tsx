@@ -1,11 +1,12 @@
 import * as React from "react";
 import {Component} from "react";
 import {Player} from "../model";
-import {Grid, Row} from "react-bootstrap";
+import {Col, Grid, Row} from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from 'react-bootstrap-table2-paginator';
 import {draftAPI} from "../api";
 import {PlayerFilter, PlayersFilter} from "./PlayerFilter";
+import {DraftOrder} from "./DraftOrder";
 
 interface IPlayersState {
     players: Player[];
@@ -180,18 +181,28 @@ export class Players extends Component<{}, IPlayersState> {
         }];
 
         return (
-            <Grid>
+            <Grid fluid={false}>
                 <Row>
-                    <PlayerFilter onChange={this.filterPlayers}/>
-                </Row>
-                <Row>
-                    <BootstrapTable
-                        keyField='id'
-                        data={filteredPlayers}
-                        columns={columns}
-                        defaultSorted={defaultSorted}
-                        pagination={paginationFactory()}
-                        bordered={false} striped={true} condensed={true}/>
+                    <Col xs={5} md={3} style={{"paddingRight": "30px"}}>
+                        <Row>
+                            <DraftOrder />
+                        </Row>
+                    </Col>
+                    {/*<Col xs={1} md={1}/>*/}
+                    <Col xs={12} md={9}>
+                        <Row>
+                            <PlayerFilter onChange={this.filterPlayers}/>
+                        </Row>
+                        <Row>
+                            <BootstrapTable
+                                keyField='id'
+                                data={filteredPlayers}
+                                columns={columns}
+                                defaultSorted={defaultSorted}
+                                pagination={paginationFactory()}
+                                bordered={false} striped={true} condensed={true}/>
+                        </Row>
+                    </Col>
                 </Row>
             </Grid>
         );
