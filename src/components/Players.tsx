@@ -7,6 +7,7 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import {draftAPI} from "../api";
 import {PlayerFilter, PlayersFilter} from "./PlayerFilter";
 import {DraftOrder} from "./DraftOrder";
+import {TeamPlayers} from "./TeamPlayers";
 
 interface IPlayersState {
     players: Player[];
@@ -186,6 +187,7 @@ export class Players extends Component<{}, IPlayersState> {
                     <Col xs={5} md={3} style={{"paddingRight": "30px"}}>
                         <Row>
                             <DraftOrder />
+                            <TeamPlayers />
                         </Row>
                     </Col>
                     {/*<Col xs={1} md={1}/>*/}

@@ -21,7 +21,7 @@ export class Player {
     public url: string;
     public fantasyteam: string;
     public owner: string;
-    public fantasyteamID: string;
+    public fantasyteam_id: number;
     public picktime: string;
     public avgpick: number;
     public byeweek: number;
