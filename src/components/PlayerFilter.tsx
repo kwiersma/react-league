@@ -10,9 +10,9 @@ interface IPlayerFilterProps {
 }
 
 export class PlayersFilter {
-    public lastname: string;
-    public position: string;
-    public isAvailable: boolean;
+    public lastname: string = "";
+    public position: string = "";
+    public isAvailable: boolean = true;
 }
 
 export class PlayerFilter extends Component<IPlayerFilterProps, IState> {

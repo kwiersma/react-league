@@ -5,30 +5,36 @@
   "proxy": "http://localhost:8000",
   "dependencies": {
     "bootstrap": "^3.3.7",
-    "react": "^16.4.2",
+    "react": "^16.8.3",
     "react-bootstrap": "^0.32.1",
     "react-bootstrap-table-next": "^1.0.0",
     "react-bootstrap-table2-paginator": "^1.0.0",
-    "react-dom": "^16.4.2",
+    "react-dom": "^16.8.3",
     "react-router-bootstrap": "^0.24.4",
     "react-router-dom": "^4.3.1",
-    "react-scripts-ts": "2.17.0"
+    "react-scripts": "^2.1.5"
   },
   "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "@types/jest": "^23.3.14",
+    "@types/node": "^10.12.26",
+    "@types/react": "^16.8.4",
+    "@types/react-bootstrap": "^0.32.11",
+    "@types/react-dom": "^16.8.2",
     "@types/react-router-bootstrap": "^0.24.5",
     "@types/react-router-dom": "^4.3.0",
     "@types/react-table": "^6.7.12",
-    "@types/jest": "^23.3.1",
-    "@types/node": "^10.5.7",
-    "@types/react": "^16.4.8",
-    "@types/react-bootstrap": "^0.32.11",
-    "@types/react-dom": "^16.0.7",
-    "typescript": "^3.0.1"
-  }
+    "typescript": "^3.3.3333"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
