@@ -45,7 +45,14 @@ export class Players extends Component<{}, IPlayersState> {
                 positionMatch = player.position === playersFilter.position;
             }
 
-            return lastNameMatch && positionMatch;
+            let isAvailableMatch = true;
+            if (playersFilter.isAvailable && playersFilter.isAvailable == "drafted") {
+                isAvailableMatch = player.fantasyteam !== "";
+            } else if (playersFilter.isAvailable && playersFilter.isAvailable == "available") {
+                isAvailableMatch = player.fantasyteam === "";
+            }
+
+            return lastNameMatch && positionMatch && isAvailableMatch;
         });
         this.setState({
             filteredPlayers
@@ -61,8 +68,10 @@ export class Players extends Component<{}, IPlayersState> {
 
         const playerNameFormatter = (cell: any, row: any) => {
             return (
-                <a href={row.url} target='_blank'>{row.lastname}, {row.firstname}</a>
-            );
+                <>
+                    <a href={row.url} target='_blank'>{row.lastname}, {row.firstname}</a><br />
+                    {row.team} - {row.position}
+                </>);
         };
 
         const teamNameFormatter = (cell: any, row: any) => {
@@ -92,32 +101,34 @@ export class Players extends Component<{}, IPlayersState> {
             sort: true,
             formatter: playerNameFormatter,
             style: {
-                width: '20%'
+                width: '15%'
             },
             headerStyle: {
-                width: '20%'
+                width: '15%'
             }
-        }, {
-            dataField: 'position',
-            text: 'Pos',
-            sort: true,
-            style: {
-                width: '8%'
-            },
-            headerStyle: {
-                width: '8%'
-            }
-        }, {
-            dataField: 'team',
-            text: 'Team',
-            sort: true,
-            style: {
-                width: '8%'
-            },
-            headerStyle: {
-                width: '8%'
-            }
-        }, {
+        },
+        // {
+        //     dataField: 'position',
+        //     text: 'Pos',
+        //     sort: true,
+        //     style: {
+        //         width: '8%'
+        //     },
+        //     headerStyle: {
+        //         width: '8%'
+        //     }
+        // }, {
+        //     dataField: 'team',
+        //     text: 'Team',
+        //     sort: true,
+        //     style: {
+        //         width: '8%'
+        //     },
+        //     headerStyle: {
+        //         width: '8%'
+        //     }
+        // },
+        {
             dataField: 'rank',
             text: 'Rank',
             sort: true,
@@ -129,7 +140,7 @@ export class Players extends Component<{}, IPlayersState> {
             }
         }, {
             dataField: 'points',
-            text: 'Points',
+            text: 'Pts',
             sort: true,
             style: {
                 width: '8%'
