@@ -86,6 +86,7 @@ export class TeamPlayers extends Component<{}, ITeamPlayersState> {
                 <Panel.Heading>
                     <Panel.Title>
                         <select
+                            className="form-control"
                             value={this.state.selectedTeamID}
                             onChange={this.handleSelectedTeamChange}>
                             {teamRows}

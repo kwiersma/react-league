@@ -6,7 +6,7 @@ import {LinkContainer} from "react-router-bootstrap";
 export class Navigation extends Component {
     public render() {
         return (
-            <Navbar>
+            <Navbar inverse={true} fixedTop={true}>
                 <Navbar.Header>
                     <Navbar.Brand>Ghetto League</Navbar.Brand>
                 </Navbar.Header>
