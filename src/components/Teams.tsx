@@ -2,30 +2,15 @@ import * as React from "react";
 import {Component} from "react";
 import {FantasyTeam} from "../model";
 import {Grid, PageHeader, Row, Table} from "react-bootstrap";
-import {draftAPI} from "../api";
 
-interface ITeamsState {
+interface TeamsProps {
     teams: FantasyTeam[];
 }
 
-export class Teams extends Component<{}, ITeamsState> {
-
-    constructor(props: {}) {
-        super(props);
-
-        this.state = {
-            teams: [],
-        };
-    }
-
-    public componentDidMount() {
-        draftAPI.getFantasyTeams().then((teams: FantasyTeam[]) => {
-            this.setState({teams});
-        });
-    }
+export class Teams extends Component<TeamsProps, {}> {
 
     public render() {
-        let {teams} = this.state;
+        let {teams} = this.props;
 
         if (teams === undefined) {
             teams = [];

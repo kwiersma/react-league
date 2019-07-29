@@ -1,31 +1,16 @@
 import * as React from "react";
 import {Component} from "react";
 import {FantasyTeam} from "../model";
-import {draftAPI} from "../api";
 import {Panel} from "react-bootstrap";
 
-interface ITeamsState {
+interface TeamsProps {
     teams: FantasyTeam[];
 }
 
-export class DraftOrder extends Component<{}, ITeamsState> {
+export class DraftOrder extends Component<TeamsProps, {}> {
 
-    constructor(props: {}) {
-        super(props);
-
-        this.state = {
-            teams: [],
-        };
-    }
-
-    public componentDidMount() {
-        draftAPI.getFantasyTeams().then((teams: FantasyTeam[]) => {
-            this.setState({teams});
-        });
-    }
-
-    public render() {
-        let {teams} = this.state;
+    render() {
+        let {teams} = this.props;
 
         if (teams === undefined) {
             teams = [];

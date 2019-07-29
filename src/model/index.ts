@@ -27,3 +27,16 @@ export class Player {
     public byeweek: number = 0;
 
 }
+
+export class Pick {
+
+    public fantasyteam: string = "";
+    public fantasyteam_id: string = "";
+    public owner: string = "";
+    public player: string = "";
+    public player_id: number = 0;
+    public round: number = 0;
+    public pick: number = 0;
+    public picktime: string = "";
+
+}

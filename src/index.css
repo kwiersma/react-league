@@ -1,5 +1,13 @@
 body {
-  margin: 0;
-  padding: 70px 0;
-  font-family: sans-serif;
+    margin: 0 0 100px;
+    padding: 70px 0;
+    font-family: sans-serif;
+}
+
+table#picksTable {
+    width: 100%;
+}
+
+table#picksTable tr td {
+    padding: 3px;
 }

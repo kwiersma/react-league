@@ -1,37 +1,31 @@
 import * as React from "react";
 import {Component, FormEvent} from "react";
 import {FantasyTeam, Player} from "../model";
-import {draftAPI} from "../api";
 import {Panel, Table} from "react-bootstrap";
 
-interface ITeamPlayersState {
-    teams: FantasyTeam[];
-    players: Player[];
+interface TeamPlayersState {
     filteredPlayers: Player[];
     selectedTeamID: string;
 }
 
-export class TeamPlayers extends Component<{}, ITeamPlayersState> {
+interface TeamPlayersProps {
+    teams: FantasyTeam[];
+    players: Player[];
+}
 
-    constructor(props: {}) {
+export class TeamPlayers extends Component<TeamPlayersProps, TeamPlayersState> {
+
+    constructor(props: TeamPlayersProps) {
         super(props);
 
         this.state = {
-            teams: [],
             selectedTeamID: "3",
-            players: [],
             filteredPlayers: []
         };
     }
 
-    public componentDidMount() {
-        draftAPI.getFantasyTeams().then((teams: FantasyTeam[]) => {
-            this.setState({teams});
-        });
-        draftAPI.getPlayers().then((players: Player[]) => {
-            this.setState({players, filteredPlayers: players});
-            this.updatePlayers();
-        });
+    componentDidMount(): void {
+        this.updatePlayers();
     }
 
     public handleSelectedTeamChange = (e: FormEvent<HTMLSelectElement>) => {
@@ -41,7 +35,7 @@ export class TeamPlayers extends Component<{}, ITeamPlayersState> {
     };
 
     public updatePlayers = () => {
-        let filteredPlayers = this.state.players;
+        let filteredPlayers = this.props.players;
         const selectedTeamID = this.state.selectedTeamID;
         filteredPlayers = filteredPlayers.filter((player) => {
             return player.fantasyteam_id.toString() === selectedTeamID;
@@ -52,7 +46,8 @@ export class TeamPlayers extends Component<{}, ITeamPlayersState> {
     };
 
     public render() {
-        let {teams, filteredPlayers} = this.state;
+        let {filteredPlayers} = this.state;
+        let {teams} = this.props;
 
         if (teams === undefined) {
             teams = [];
@@ -73,10 +68,11 @@ export class TeamPlayers extends Component<{}, ITeamPlayersState> {
         const playerRows = filteredPlayers.map((player, idx) => {
             return (
                 <tr key={player.id}>
-                    <td>{player.lastname}, {player.firstname}</td>
+                    <td>{player.lastname}, {player.firstname}<br />
+                        (R {player.round}, P {player.pick})
+                    </td>
                     <td>{player.position}</td>
                     <td>{player.byeweek}</td>
-                    <td>{player.round}, {player.pick}</td>
                 </tr>
             )
         });
@@ -94,13 +90,12 @@ export class TeamPlayers extends Component<{}, ITeamPlayersState> {
                     </Panel.Title>
                 </Panel.Heading>
                 <Panel.Body>
-                    <Table>
+                    <Table striped={true}>
                         <thead>
                         <tr>
                             <th>Player</th>
                             <th>Pos</th>
                             <th>Bye</th>
-                            <th>R, P</th>
                         </tr>
                         </thead>
                         <tbody>

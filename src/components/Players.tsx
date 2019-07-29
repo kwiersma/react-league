@@ -1,38 +1,34 @@
 import * as React from "react";
 import {Component} from "react";
-import {Player} from "../model";
+import {FantasyTeam, Player} from "../model";
 import {Col, Grid, Row} from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from 'react-bootstrap-table2-paginator';
-import {draftAPI} from "../api";
 import {PlayerFilter, PlayersFilter} from "./PlayerFilter";
 import {DraftOrder} from "./DraftOrder";
 import {TeamPlayers} from "./TeamPlayers";
 
-interface IPlayersState {
-    players: Player[];
+interface PlayersState {
     filteredPlayers: Player[];
 }
 
-export class Players extends Component<{}, IPlayersState> {
+interface PlayersProps {
+    players: Player[];
+    teams: FantasyTeam[];
+}
 
-    constructor(props: {}) {
+export class Players extends Component<PlayersProps, PlayersState> {
+
+    constructor(props: PlayersProps) {
         super(props);
 
         this.state = {
-            players: [],
-            filteredPlayers: []
+            filteredPlayers: props.players
         };
     }
 
-    public componentDidMount() {
-        draftAPI.getPlayers().then((players: Player[]) => {
-            this.setState({players, filteredPlayers: players});
-        });
-    }
-
     public filterPlayers = (playersFilter: PlayersFilter) => {
-        let filteredPlayers = this.state.players;
+        let filteredPlayers = this.props.players;
         filteredPlayers = filteredPlayers.filter((player) => {
             let lastNameMatch = true;
             if (playersFilter.lastname && playersFilter.lastname !== '') {
@@ -61,6 +57,7 @@ export class Players extends Component<{}, IPlayersState> {
 
     public render() {
         let {filteredPlayers} = this.state;
+        const {teams, players} = this.props;
 
         if (filteredPlayers === undefined) {
             filteredPlayers = [];
@@ -195,13 +192,12 @@ export class Players extends Component<{}, IPlayersState> {
         return (
             <Grid fluid={false}>
                 <Row>
-                    <Col xs={5} md={3} style={{"paddingRight": "30px"}}>
+                    <Col xs={5} md={3} style={{paddingRight: "30px"}}>
                         <Row>
-                            <DraftOrder />
-                            <TeamPlayers />
+                            <DraftOrder teams={teams} />
+                            <TeamPlayers players={players} teams={teams} />
                         </Row>
                     </Col>
-                    {/*<Col xs={1} md={1}/>*/}
                     <Col xs={12} md={9}>
                         <Row>
                             <PlayerFilter onChange={this.filterPlayers}/>
