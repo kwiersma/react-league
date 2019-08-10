@@ -5,6 +5,7 @@
   "proxy": "http://localhost:8000",
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "pusher-js": "^5.0.0",
     "react": "^16.8.3",
     "react-bootstrap": "^0.32.1",
     "react-bootstrap-table-next": "^1.0.0",
@@ -23,6 +24,7 @@
   "devDependencies": {
     "@types/jest": "^23.3.14",
     "@types/node": "^10.12.26",
+    "@types/pusher-js": "^4.2.2",
     "@types/react": "^16.8.4",
     "@types/react-bootstrap": "^0.32.11",
     "@types/react-dom": "^16.8.2",

@@ -9,7 +9,7 @@ import {DraftOrder} from "./DraftOrder";
 import {TeamPlayers} from "./TeamPlayers";
 
 interface PlayersState {
-    filteredPlayers: Player[];
+    playersFilter: PlayersFilter;
 }
 
 interface PlayersProps {
@@ -23,11 +23,16 @@ export class Players extends Component<PlayersProps, PlayersState> {
         super(props);
 
         this.state = {
-            filteredPlayers: props.players
+            playersFilter: new PlayersFilter()
         };
     }
 
-    public filterPlayers = (playersFilter: PlayersFilter) => {
+    public onPlayersFilterChange = (playersFilter: PlayersFilter) => {
+        this.setState({playersFilter});
+    };
+
+    private filterPlayers = (): Player[] => {
+        let playersFilter = this.state.playersFilter;
         let filteredPlayers = this.props.players;
         filteredPlayers = filteredPlayers.filter((player) => {
             let lastNameMatch = true;
@@ -50,13 +55,11 @@ export class Players extends Component<PlayersProps, PlayersState> {
 
             return lastNameMatch && positionMatch && isAvailableMatch;
         });
-        this.setState({
-            filteredPlayers
-        })
+        return filteredPlayers;
     };
 
     public render() {
-        let {filteredPlayers} = this.state;
+        let filteredPlayers = this.filterPlayers();
         const {teams, players} = this.props;
 
         if (filteredPlayers === undefined) {
@@ -92,7 +95,8 @@ export class Players extends Component<PlayersProps, PlayersState> {
             order: 'asc'
         }];
 
-        const columns = [{
+        const columns = [
+        {
             dataField: 'lastname',
             text: 'Player',
             sort: true,
@@ -104,27 +108,6 @@ export class Players extends Component<PlayersProps, PlayersState> {
                 width: '15%'
             }
         },
-        // {
-        //     dataField: 'position',
-        //     text: 'Pos',
-        //     sort: true,
-        //     style: {
-        //         width: '8%'
-        //     },
-        //     headerStyle: {
-        //         width: '8%'
-        //     }
-        // }, {
-        //     dataField: 'team',
-        //     text: 'Team',
-        //     sort: true,
-        //     style: {
-        //         width: '8%'
-        //     },
-        //     headerStyle: {
-        //         width: '8%'
-        //     }
-        // },
         {
             dataField: 'rank',
             text: 'Rank',
@@ -200,7 +183,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
                     </Col>
                     <Col xs={12} md={9}>
                         <Row>
-                            <PlayerFilter onChange={this.filterPlayers}/>
+                            <PlayerFilter onChange={this.onPlayersFilterChange}/>
                         </Row>
                         <Row>
                             <BootstrapTable

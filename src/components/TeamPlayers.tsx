@@ -24,29 +24,21 @@ export class TeamPlayers extends Component<TeamPlayersProps, TeamPlayersState> {
         };
     }
 
-    componentDidMount(): void {
-        this.updatePlayers();
-    }
-
     public handleSelectedTeamChange = (e: FormEvent<HTMLSelectElement>) => {
-        this.setState(
-            { selectedTeamID: e.currentTarget.value},
-            this.updatePlayers);
+        this.setState({ selectedTeamID: e.currentTarget.value});
     };
 
-    public updatePlayers = () => {
+    private updatePlayers = (): Player[] => {
         let filteredPlayers = this.props.players;
         const selectedTeamID = this.state.selectedTeamID;
         filteredPlayers = filteredPlayers.filter((player) => {
             return player.fantasyteam_id.toString() === selectedTeamID;
         });
-        this.setState({
-            filteredPlayers
-        })
+        return filteredPlayers;
     };
 
     public render() {
-        let {filteredPlayers} = this.state;
+        let filteredPlayers = this.updatePlayers();
         let {teams} = this.props;
 
         if (teams === undefined) {
