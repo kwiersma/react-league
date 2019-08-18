@@ -8,6 +8,8 @@ import {Players} from "./components/Players";
 import {Picks} from "./components/Picks";
 import {FantasyTeam, Pick, Player} from "./model";
 import {draftAPI} from "./api";
+import {ToastContainer, toast} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 interface State {
     teams: FantasyTeam[];
@@ -46,6 +48,7 @@ class App extends React.Component<{}, State> {
         const channel = pusher.subscribe('draftedPlayers');
         channel.bind('playerDrafted', (data) => {
             console.log("playerDrafted notification received", data);
+            toast.success(data[2].player + " was picked by " + data[2].owner);
             this.setState({showPickbar: false, picks: data}, () => {
                 this.processPicks();
             });
@@ -130,6 +133,7 @@ class App extends React.Component<{}, State> {
                         <Redirect to="/teams"/>
                     </Switch>
                     <Picks picks={picks}/>
+                    <ToastContainer />
                 </div>
             </BrowserRouter>
         );

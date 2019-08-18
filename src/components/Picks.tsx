@@ -21,14 +21,6 @@ export class Picks extends Component<PicksProps, PicksState> {
         }
     }
 
-    componentDidMount(): void {
-        let {pickTimerStart} = this.state;
-        if (this.props.picks.length > 2) {
-            pickTimerStart = new Date(this.props.picks[2].picktime).getTime();
-            this.setState({pickTimerStart})
-        }
-    }
-
     renderPicks() {
         const {picks} = this.props;
 
