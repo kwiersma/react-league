@@ -112,7 +112,6 @@ class App extends React.Component<{}, State> {
                 }
             }
             this.setState({showPickbar: true});
-            //TODO: playersQueryChanged();
         }
     }
 
@@ -125,9 +124,9 @@ class App extends React.Component<{}, State> {
                     <Navigation/>
                     <Switch>
                         <Route exact={true} path="/teams"
-                               render={() => <Teams teams={teams}/>} />
+                               render={() => <Teams teams={teams} />} />
                         <Route exact={true} path="/players"
-                               render={() => <Players players={players} teams={teams}/>}/>
+                               render={() => <Players players={players} teams={teams} picks={picks} />}/>
                         <Redirect to="/teams"/>
                     </Switch>
                     <Picks picks={picks}/>

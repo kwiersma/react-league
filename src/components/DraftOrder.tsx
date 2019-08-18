@@ -1,41 +1,133 @@
 import * as React from "react";
 import {Component} from "react";
-import {FantasyTeam} from "../model";
-import {Panel} from "react-bootstrap";
+import {FantasyTeam, Pick} from "../model";
+import {Label, ListGroup, ListGroupItem} from "react-bootstrap";
 
-interface TeamsProps {
+interface DraftOrderProps {
     teams: FantasyTeam[];
+    picks: Pick[];
 }
 
-export class DraftOrder extends Component<TeamsProps, {}> {
+class PickRow {
 
-    render() {
-        let {teams} = this.props;
+    public rowType: string = "";
+    public name: string = "";
+    public roundPick: number = 0;
+    public pickNo: number = 0;
+
+    constructor() {
+
+    }
+}
+
+export class DraftOrder extends Component<DraftOrderProps, {}> {
+
+    setupPickRows(): PickRow[] {
+        let {teams, picks} = this.props;
+
+        let currentRound = 0;
+        let currentPick = 1;
+        if (picks && picks.length > 0) {
+            currentRound = picks[0].round;
+            currentPick = picks[0].pick;
+        }
+        let pickRows: PickRow[] = [];
 
         if (teams === undefined) {
             teams = [];
         }
 
-        const teamRows = teams.map((team, idx) => {
+        if (teams.length > 0 && currentRound > 0) {
+            pickRows = this.generateRowsByRound(currentRound, currentPick, teams, pickRows);
+            if (pickRows.length < 13) {
+                pickRows = this.generateRowsByRound(currentRound + 1, 1, teams, pickRows);
+            }
+        }
+
+        return pickRows;
+    }
+
+    generateRowsByRound(startRound: number, startRoundPick: number,
+                        teams: FantasyTeam[], pickRows: PickRow[]): PickRow[] {
+        var isOddRound: boolean = startRound % 2 == 1 || startRound == 0;
+
+        var pickRow = new PickRow();
+        pickRow.rowType = 'round';
+        pickRow.name = 'Round ' + startRound;
+        pickRows.push(pickRow);
+
+        var i = 0;
+        if (isOddRound) {
+            i = startRoundPick - 1;
+        } else {
+            i = teams.length - startRoundPick;
+        }
+        var picksAdded = 1;
+        while (i < teams.length && i >= 0 && pickRows.length < 13) {
+            var team: FantasyTeam = teams[i];
+            pickRow = new PickRow();
+            pickRow.rowType = 'team';
+            pickRow.name = team.name + " (" + team.owner + ")";
+            pickRow.roundPick = startRoundPick + picksAdded;
+            // Round 0 is keepers which don't have a pick no
+            pickRow.pickNo = ((startRound - 1) * 10) + (pickRow.roundPick - 1);
+            pickRows.push(pickRow);
+            picksAdded++;
+            if (isOddRound) {
+                i++;
+            } else {
+                i--;
+            }
+        }
+
+        return pickRows;
+    }
+
+    render() {
+        const pickRows = this.setupPickRows();
+
+        const teamRows = pickRows.map((row, idx) => {
+            let itemStyle = {};
+            let itemClass = "";
+            let labelClass = "success";
+            let label = <></>;
+            if (row.rowType != 'round') {
+                if (idx == 1) {
+                    itemClass = "alert alert-danger";
+                    labelClass = "danger";
+                } else if (idx == 2) {
+                    itemClass = "alert alert-warning";
+                    labelClass = "warning";
+                }
+                label = (
+                    <>
+                        <Label bsStyle={labelClass}>{row.pickNo}.</Label>
+                        <span style={{paddingLeft: '5px'}}>
+                            {row.name}
+                        </span>
+                    </>
+                );
+            } else {
+                itemStyle = {color: 'white', backgroundColor: 'black'};
+                label = (
+                  <>
+                      {row.name}
+                  </>
+                );
+            }
+
             return (
-                <li key={team.id}>
-                    {team.name}<br/>
-                    ({team.owner})
-                </li>
+                <ListGroupItem key={idx} className={itemClass} style={itemStyle}>
+                    {label}
+                </ListGroupItem>
             );
+
         });
 
         return (
-            <Panel>
-                <Panel.Heading>
-                    <Panel.Title componentClass="h3">Draft Order</Panel.Title>
-                </Panel.Heading>
-                <Panel.Body>
-                    <ol>
-                        {teamRows}
-                    </ol>
-                </Panel.Body>
-            </Panel>
+            <ListGroup>
+                {teamRows}
+            </ListGroup>
         );
     }
 }

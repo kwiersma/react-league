@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Component} from "react";
-import {FantasyTeam, Player} from "../model";
+import {FantasyTeam, Player, Pick} from "../model";
 import {Col, Grid, Row} from "react-bootstrap";
 import BootstrapTable from "react-bootstrap-table-next";
 import paginationFactory from 'react-bootstrap-table2-paginator';
@@ -15,6 +15,7 @@ interface PlayersState {
 interface PlayersProps {
     players: Player[];
     teams: FantasyTeam[];
+    picks: Pick[];
 }
 
 export class Players extends Component<PlayersProps, PlayersState> {
@@ -60,7 +61,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
 
     public render() {
         let filteredPlayers = this.filterPlayers();
-        const {teams, players} = this.props;
+        const {teams, players, picks} = this.props;
 
         if (filteredPlayers === undefined) {
             filteredPlayers = [];
@@ -177,7 +178,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
                 <Row>
                     <Col xs={5} md={3} style={{paddingRight: "30px"}}>
                         <Row>
-                            <DraftOrder teams={teams} />
+                            <DraftOrder teams={teams} picks={picks} />
                             <TeamPlayers players={players} teams={teams} />
                         </Row>
                     </Col>
