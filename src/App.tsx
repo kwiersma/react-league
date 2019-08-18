@@ -60,7 +60,7 @@ class App extends React.Component<{}, State> {
         // this.currentRound = picks[0].round;
         // this.currentPickNo = this.calculatePickNumber(picks[0].round,
         //     picks[0].pick);
-        if (this.currentPick != picks[0].pick) {
+        if (this.currentPick !== picks[0].pick) {
             pickHasChanged = true;
             this.currentPick = picks[0].pick;
             //this.pickTimerStart = new Date(picks[2].picktime).getTime();
@@ -88,7 +88,7 @@ class App extends React.Component<{}, State> {
         if (pickHasChanged) {
             for (var i = 0; i < players.length; i++) {
                 var player = players[i];
-                if (player.id == picks[2].player_id) {
+                if (player.id === picks[2].player_id) {
                     found++;
                     player.fantasyteam_id = parseInt(picks[2].fantasyteam_id);
                     player.round = picks[2].round;
@@ -97,7 +97,7 @@ class App extends React.Component<{}, State> {
                     player.owner = picks[2].owner;
                     //console.log('player matched for just drafted');
                 } else {
-                    if (player.id == picks[3].player_id) {
+                    if (player.id === picks[3].player_id) {
                         found++;
                         player.fantasyteam_id = parseInt(picks[3].fantasyteam_id);
                         player.round = picks[3].round;
@@ -107,7 +107,7 @@ class App extends React.Component<{}, State> {
                         //console.log('player previous matched');
                     }
                 }
-                if (found == 2) {
+                if (found === 2) {
                     break;
                 }
             }

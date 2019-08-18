@@ -15,9 +15,6 @@ class PickRow {
     public roundPick: number = 0;
     public pickNo: number = 0;
 
-    constructor() {
-
-    }
 }
 
 export class DraftOrder extends Component<DraftOrderProps, {}> {
@@ -49,7 +46,7 @@ export class DraftOrder extends Component<DraftOrderProps, {}> {
 
     generateRowsByRound(startRound: number, startRoundPick: number,
                         teams: FantasyTeam[], pickRows: PickRow[]): PickRow[] {
-        var isOddRound: boolean = startRound % 2 == 1 || startRound == 0;
+        var isOddRound: boolean = startRound % 2 === 1 || startRound === 0;
 
         var pickRow = new PickRow();
         pickRow.rowType = 'round';
@@ -91,11 +88,11 @@ export class DraftOrder extends Component<DraftOrderProps, {}> {
             let itemClass = "";
             let labelClass = "success";
             let label = <></>;
-            if (row.rowType != 'round') {
-                if (idx == 1) {
+            if (row.rowType !== 'round') {
+                if (idx === 1) {
                     itemClass = "alert alert-danger";
                     labelClass = "danger";
-                } else if (idx == 2) {
+                } else if (idx === 2) {
                     itemClass = "alert alert-warning";
                     labelClass = "warning";
                 }

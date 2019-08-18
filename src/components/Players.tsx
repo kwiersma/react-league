@@ -48,9 +48,9 @@ export class Players extends Component<PlayersProps, PlayersState> {
             }
 
             let isAvailableMatch = true;
-            if (playersFilter.isAvailable && playersFilter.isAvailable == "drafted") {
+            if (playersFilter.isAvailable && playersFilter.isAvailable === "drafted") {
                 isAvailableMatch = player.fantasyteam !== "";
-            } else if (playersFilter.isAvailable && playersFilter.isAvailable == "available") {
+            } else if (playersFilter.isAvailable && playersFilter.isAvailable === "available") {
                 isAvailableMatch = player.fantasyteam === "";
             }
 
@@ -70,7 +70,8 @@ export class Players extends Component<PlayersProps, PlayersState> {
         const playerNameFormatter = (cell: any, row: any) => {
             return (
                 <>
-                    <a href={row.url} target='_blank'>{row.lastname}, {row.firstname}</a><br />
+                    <a href={row.url}
+                       target="_blank" rel="noopener noreferrer">{row.lastname}, {row.firstname}</a><br />
                     {row.team} - {row.position}
                 </>);
         };

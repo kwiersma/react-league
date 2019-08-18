@@ -67,21 +67,21 @@ export class PlayerFilter extends Component<IPlayerFilterProps, IState> {
                         <input type="radio" id="isAvailable_1"
                                value="any"
                                onChange={this.handleIsAvailableChange}
-                               checked={this.state.playerFilter.isAvailable == "any"}/> Any
+                               checked={this.state.playerFilter.isAvailable === "any"}/> Any
                     </label>
                     <div className="form-group" style={{'paddingLeft': '20px'}}/>
                     <label className="radio-inline">
                         <input type="radio" id="isAvailable_1"
                                value="available"
                                onChange={this.handleIsAvailableChange}
-                               checked={this.state.playerFilter.isAvailable == "available"}/> Available
+                               checked={this.state.playerFilter.isAvailable === "available"}/> Available
                     </label>
                     <div className="form-group" style={{'paddingLeft': '20px'}}/>
                     <label className="radio-inline">
                         <input type="radio" id="isAvailable_0"
                                value="drafted"
                                onChange={this.handleIsAvailableChange}
-                               checked={this.state.playerFilter.isAvailable == "drafted"}/> Drafted
+                               checked={this.state.playerFilter.isAvailable === "drafted"}/> Drafted
                     </label>
                     <div className="form-group" style={{'paddingLeft': '20px'}}/>
                     <div className="form-group">

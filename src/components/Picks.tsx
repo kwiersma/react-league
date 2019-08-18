@@ -1,6 +1,5 @@
 import * as React from "react";
 import {Component} from "react";
-import {draftAPI} from "../api";
 import {Pick} from "../model";
 
 interface PicksProps {
@@ -128,7 +127,7 @@ class Timer extends React.Component<TimerProps, TimerState> {
     componentDidUpdate(prevProps: Readonly<TimerProps>,
                        prevState: Readonly<TimerState>,
                        snapshot?: any): void {
-        if (prevProps.startTime != this.props.startTime) {
+        if (prevProps.startTime !== this.props.startTime) {
             this.startPickTimer();
         }
     }
