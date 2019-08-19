@@ -25,7 +25,7 @@ export class TeamPlayers extends Component<TeamPlayersProps, TeamPlayersState> {
     }
 
     public handleSelectedTeamChange = (e: FormEvent<HTMLSelectElement>) => {
-        this.setState({ selectedTeamID: e.currentTarget.value});
+        this.setState({selectedTeamID: e.currentTarget.value});
     };
 
     private updatePlayers = (): Player[] => {
@@ -60,7 +60,7 @@ export class TeamPlayers extends Component<TeamPlayersProps, TeamPlayersState> {
         const playerRows = filteredPlayers.map((player, idx) => {
             return (
                 <tr key={player.id}>
-                    <td>{player.lastname}, {player.firstname}<br />
+                    <td>{player.lastname}, {player.firstname}<br/>
                         (R {player.round}, P {player.pick})
                     </td>
                     <td>{player.position}</td>

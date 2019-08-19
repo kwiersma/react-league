@@ -25,6 +25,7 @@ export class Player {
     public picktime: string = "";
     public avgpick: number = 0;
     public byeweek: number = 0;
+    public pickNo: number = 0;
 
 }
 
