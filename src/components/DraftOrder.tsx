@@ -2,6 +2,7 @@ import * as React from "react";
 import {Component} from "react";
 import {FantasyTeam, Pick} from "../model";
 import {Label, ListGroup, ListGroupItem} from "react-bootstrap";
+import FlipMove from "react-flip-move";
 
 interface DraftOrderProps {
     teams: FantasyTeam[];
@@ -123,7 +124,9 @@ export class DraftOrder extends Component<DraftOrderProps, {}> {
 
         return (
             <ListGroup>
-                {teamRows}
+                <FlipMove duration={750} easing="ease-out">
+                    {teamRows}
+                </FlipMove>
             </ListGroup>
         );
     }
