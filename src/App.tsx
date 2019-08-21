@@ -96,6 +96,7 @@ class App extends React.Component<{}, State> {
                     player.fantasyteam_id = parseInt(picks[2].fantasyteam_id);
                     player.round = picks[2].round;
                     player.pick = picks[2].pick;
+                    player.pickNo = picks[2].pickNo;
                     player.fantasyteam = picks[2].fantasyteam;
                     player.owner = picks[2].owner;
                     //console.log('player matched for just drafted');
@@ -105,6 +106,7 @@ class App extends React.Component<{}, State> {
                         player.fantasyteam_id = parseInt(picks[3].fantasyteam_id);
                         player.round = picks[3].round;
                         player.pick = picks[3].pick;
+                        player.pickNo = picks[3].pickNo;
                         player.fantasyteam = picks[3].fantasyteam;
                         player.owner = picks[3].owner;
                         //console.log('player previous matched');

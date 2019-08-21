@@ -39,5 +39,6 @@ export class Pick {
     public round: number = 0;
     public pick: number = 0;
     public picktime: string = "";
+    public pickNo: number = 0;
 
 }
