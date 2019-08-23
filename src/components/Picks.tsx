@@ -31,6 +31,15 @@ export class Picks extends Component<PicksProps, PicksState> {
             pickTimerStart = new Date().getTime();
         }
 
+        let lastPickCell = <td></td>;
+        if (picks[2] !== undefined) {
+            lastPickCell = <td>{picks[2].player} by {picks[2].fantasyteam} ({picks[2].owner})</td>;
+        }
+        let beforeLastCell = <td></td>;
+        if (picks[3] !== undefined) {
+            beforeLastCell = <td>{picks[3].player} by {picks[3].fantasyteam} ({picks[3].owner})</td>;
+        }
+
         return (
             <table id="picksTable">
                 <tbody>
@@ -45,7 +54,7 @@ export class Picks extends Component<PicksProps, PicksState> {
                     <td style={{textAlign: "right"}}>
                         <span className="label label-success">Last Pick: </span>
                     </td>
-                    <td>{picks[2].player} by {picks[2].fantasyteam} ({picks[2].owner})</td>
+                    {lastPickCell}
                     <td rowSpan={2} align="center">
                         <Timer startTime={pickTimerStart}/>
                         <span className="label label-danger">On the clock</span>
@@ -61,7 +70,7 @@ export class Picks extends Component<PicksProps, PicksState> {
                     <td style={{textAlign: "right"}}>
                         <span className="label label-success">Before Last Pick: </span>
                     </td>
-                    <td>{picks[3].player} by {picks[3].fantasyteam} ({picks[3].owner})</td>
+                    {beforeLastCell}
                 </tr>
                 </tbody>
             </table>

@@ -91,7 +91,7 @@ class App extends React.Component<{}, State> {
         if (pickHasChanged) {
             for (var i = 0; i < players.length; i++) {
                 var player = players[i];
-                if (player.id === picks[2].player_id) {
+                if (picks[2] && player.id === picks[2].player_id) {
                     found++;
                     player.fantasyteam_id = parseInt(picks[2].fantasyteam_id);
                     player.round = picks[2].round;
@@ -101,7 +101,7 @@ class App extends React.Component<{}, State> {
                     player.owner = picks[2].owner;
                     //console.log('player matched for just drafted');
                 } else {
-                    if (player.id === picks[3].player_id) {
+                    if (picks[3] && player.id === picks[3].player_id) {
                         found++;
                         player.fantasyteam_id = parseInt(picks[3].fantasyteam_id);
                         player.round = picks[3].round;
