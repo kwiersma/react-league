@@ -124,7 +124,7 @@ class App extends React.Component<{}, State> {
         const { teams, players, picks } = this.state;
 
         return (
-            <BrowserRouter>
+            <BrowserRouter basename="/draft2">
                 <div>
                     <Navigation/>
                     <Switch>
