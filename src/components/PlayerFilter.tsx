@@ -71,7 +71,7 @@ export class PlayerFilter extends Component<IPlayerFilterProps, IState> {
                     </label>
                     <div className="form-group" style={{'paddingLeft': '20px'}}/>
                     <label className="radio-inline">
-                        <input type="radio" id="isAvailable_1"
+                        <input type="radio" id="isAvailable_2"
                                value="available"
                                onChange={this.handleIsAvailableChange}
                                checked={this.state.playerFilter.isAvailable === "available"}/> Available

@@ -1,14 +1,14 @@
-import * as React from "react";
+import React from "react";
 import Pusher from 'pusher-js';
-import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import "./App.css";
-import {Navigation} from "./components/Navigation";
-import {Teams} from "./components/Teams";
-import {Players} from "./components/Players";
-import {Picks} from "./components/Picks";
-import {FantasyTeam, Pick, Player} from "./model";
-import {draftAPI} from "./api";
-import {ToastContainer, toast} from "react-toastify";
+import { Navigation } from "./components/Navigation";
+import { Teams } from "./components/Teams";
+import { Players } from "./components/Players";
+import { Picks } from "./components/Picks";
+import { FantasyTeam, Pick, Player } from "./model";
+import { draftAPI } from "./api";
+import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
 interface State {
@@ -35,29 +35,29 @@ class App extends React.Component<{}, State> {
 
     public componentDidMount() {
         draftAPI.getFantasyTeams().then((teams: FantasyTeam[]) => {
-            this.setState({teams});
+            this.setState({ teams });
         });
         draftAPI.getPlayers().then((players: Player[]) => {
-            this.setState({players});
+            this.setState({ players });
         });
         draftAPI.getPicks().then((picks: Pick[]) => {
-            this.setState({picks});
+            this.setState({ picks });
         });
 
-        const pusher = new Pusher('1c799ff10581875222b7', {'cluster': 'mt1'});
+        const pusher = new Pusher('1c799ff10581875222b7', { 'cluster': 'mt1' });
         const channel = pusher.subscribe('draftedPlayers');
         channel.bind('playerDrafted', (data) => {
             console.log("playerDrafted notification received", data);
             toast.success(data[2].player + " was picked by " + data[2].owner);
-            this.setState({showPickbar: false, picks: data}, () => {
+            this.setState({ showPickbar: false, picks: data }, () => {
                 this.processPicks();
             });
         });
     }
 
     processPicks() {
-        let {picks, players} = this.state;
-        
+        let { picks, players } = this.state;
+
         var pickHasChanged = false;
 
         // this.currentRound = picks[0].round;
@@ -116,7 +116,7 @@ class App extends React.Component<{}, State> {
                     break;
                 }
             }
-            this.setState({showPickbar: true});
+            this.setState({ showPickbar: true });
         }
     }
 
@@ -126,15 +126,15 @@ class App extends React.Component<{}, State> {
         return (
             <BrowserRouter basename="/draft2">
                 <div>
-                    <Navigation/>
+                    <Navigation />
                     <Switch>
                         <Route exact={true} path="/teams"
-                               render={() => <Teams teams={teams} />} />
+                            render={() => <Teams teams={teams} />} />
                         <Route exact={true} path="/players"
-                               render={() => <Players players={players} teams={teams} picks={picks} />}/>
-                        <Redirect to="/teams"/>
+                            render={() => <Players players={players} teams={teams} picks={picks} />} />
+                        <Redirect to="/teams" />
                     </Switch>
-                    <Picks picks={picks}/>
+                    <Picks picks={picks} />
                     <ToastContainer />
                 </div>
             </BrowserRouter>
