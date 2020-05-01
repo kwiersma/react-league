@@ -46,7 +46,7 @@ class App extends React.Component<{}, State> {
 
         const pusher = new Pusher('1c799ff10581875222b7', { 'cluster': 'mt1' });
         const channel = pusher.subscribe('draftedPlayers');
-        channel.bind('playerDrafted', (data) => {
+        channel.bind('playerDrafted', (data: any) => {
             console.log("playerDrafted notification received", data);
             toast.success(data[2].player + " was picked by " + data[2].owner);
             this.setState({ showPickbar: false, picks: data }, () => {
