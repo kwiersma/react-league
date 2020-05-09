@@ -7,7 +7,7 @@ test("should render last name field", async () => {
     const { getByLabelText } = render(<PlayerFilter onChange={changeHandler} />);
 
     const input = getByLabelText("Last name:") as HTMLInputElement;
-    expect(input !== undefined);
+    expect(input).toBeInTheDocument();
 
     fireEvent.change(input, { target: { value: 'a' } });
 
