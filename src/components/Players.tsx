@@ -179,8 +179,8 @@ export class Players extends Component<PlayersProps, PlayersState> {
                 <>
                     <a href={row.url}
                        target="_blank" rel="noopener noreferrer">{row.lastname}, {row.firstname}</a><br/>
-                    {row.team} - {row.position}
-                    <span style={{color: 'red', fontSize: '10px', paddingLeft: '4px'}}>{row.nfl_status}</span>
+                    <span style={{fontSize: '10px', paddingRight: '4px'}}>{row.team} - {row.position}</span>
+                    <span className="label label-danger">{row.nfl_status}</span>
                 </>);
         };
 
