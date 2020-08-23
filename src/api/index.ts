@@ -65,8 +65,29 @@ const getPicks = (): Promise<Pick[]> => {
         });
 };
 
+const savePlayer = (selectedPlayer: Player, currentRound: number, currentPick: number) => {
+    let data = {
+        id: selectedPlayer.id,
+        fantasyteam_id: selectedPlayer.fantasyteam_id,
+        round: currentRound,
+        pick: currentPick
+    };
+    fetch('/api2/player', {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
+    .then((data) => {
+        console.log('save player success!', data);
+    });
+}
+
 export const draftAPI = {
     getFantasyTeams,
     getPlayers,
     getPicks,
+    savePlayer,
 };
