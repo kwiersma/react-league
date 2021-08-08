@@ -5,6 +5,6 @@ import { render } from "@testing-library/react";
 test("should render app", async () => {
   const { getByText } = render(<App />);
 
-  const navbar = await getByText("Ghetto League");
+  const navbar = getByText("Ghetto League");
   expect(navbar).toBeInTheDocument();
 });
