@@ -34,7 +34,10 @@ export class TeamPlayers extends Component<TeamPlayersProps, TeamPlayersState> {
         filteredPlayers = filteredPlayers.filter((player) => {
             return player.fantasyteam_id.toString() === selectedTeamID;
         });
-        return filteredPlayers;
+        let sortedPlayers = filteredPlayers.sort((a: Player, b: Player) => {
+            return a.round - b.round;
+        })
+        return sortedPlayers;
     };
 
     public render() {
