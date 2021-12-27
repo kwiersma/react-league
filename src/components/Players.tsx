@@ -2,6 +2,8 @@ import * as React from "react";
 import {Component, FormEvent} from "react";
 import {FantasyTeam, Pick, Player} from "../model";
 import {Button, Col, Container, Modal, Row} from "react-bootstrap";
+import BootstrapTable from "react-bootstrap-table-next";
+import paginationFactory from "react-bootstrap-table2-paginator";
 import {PlayerFilter, PlayersFilter} from "./PlayerFilter";
 import {DraftOrder} from "./DraftOrder";
 import {TeamPlayers} from "./TeamPlayers";
