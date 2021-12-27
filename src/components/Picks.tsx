@@ -1,6 +1,7 @@
 import * as React from "react";
 import {Component} from "react";
 import {Pick} from "../model";
+import {Badge, Navbar} from "react-bootstrap";
 
 interface PicksProps {
     picks: Pick[];
@@ -45,30 +46,30 @@ export class Picks extends Component<PicksProps, PicksState> {
                 <tbody>
                 <tr style={{verticalAlign: "top"}}>
                     <td style={{textAlign: "right"}}>
-                        <span className="label label-danger">On the clock: </span>
+                        <Badge variant="danger">On the clock: </Badge>
                     </td>
                     <td>
                         {picks[0].fantasyteam} ({picks[0].owner})
                         (R {picks[0].round} P {picks[0].pick})
                     </td>
                     <td style={{textAlign: "right"}}>
-                        <span className="label label-success">Last Pick: </span>
+                        <Badge variant="success">Last Pick: </Badge>
                     </td>
                     {lastPickCell}
                     <td rowSpan={2} align="center">
                         <Timer startTime={pickTimerStart}/>
-                        <span className="label label-danger">On the clock</span>
+                        <Badge variant="danger">On the clock</Badge>
                     </td>
                 </tr>
                 <tr>
                     <td style={{textAlign: "right"}}>
-                        <span className="label label-warning">On deck:</span>
+                        <Badge variant="warning">On deck:</Badge>
                     </td>
                     <td>
                         {picks[1].fantasyteam} ({picks[1].owner})
                     </td>
                     <td style={{textAlign: "right"}}>
-                        <span className="label label-success">Before Last Pick: </span>
+                        <Badge variant="success">Before Last Pick: </Badge>
                     </td>
                     {beforeLastCell}
                 </tr>
@@ -86,10 +87,10 @@ export class Picks extends Component<PicksProps, PicksState> {
         }
 
         return (
-            <div className="navbar navbar-fixed-bottom alert alert-info pickbarAnimate"
-                 style={{marginBottom: 0}}>
+            <Navbar fixed="bottom" className={"pickbarAnimate alert alert-info"}
+                    style={{marginBottom: 0}}>
                 {picksTable}
-            </div>
+            </Navbar>
         );
     }
 }

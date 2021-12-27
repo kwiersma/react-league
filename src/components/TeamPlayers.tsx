@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Component, FormEvent} from "react";
 import {FantasyTeam, Player} from "../model";
-import {Panel, Table} from "react-bootstrap";
+import {Card, Table} from "react-bootstrap";
 
 interface TeamPlayersState {
     filteredPlayers: Player[];
@@ -73,18 +73,16 @@ export class TeamPlayers extends Component<TeamPlayersProps, TeamPlayersState> {
         });
 
         return (
-            <Panel>
-                <Panel.Heading>
-                    <Panel.Title>
-                        <select
-                            className="form-control"
-                            value={this.state.selectedTeamID}
-                            onChange={this.handleSelectedTeamChange}>
-                            {teamRows}
-                        </select>
-                    </Panel.Title>
-                </Panel.Heading>
-                <Panel.Body>
+            <Card>
+                <Card.Header>
+                    <select
+                        className="form-control"
+                        value={this.state.selectedTeamID}
+                        onChange={this.handleSelectedTeamChange}>
+                        {teamRows}
+                    </select>
+                </Card.Header>
+                <Card.Body>
                     <Table striped={true}>
                         <thead>
                         <tr>
@@ -97,8 +95,8 @@ export class TeamPlayers extends Component<TeamPlayersProps, TeamPlayersState> {
                             {playerRows}
                         </tbody>
                     </Table>
-                </Panel.Body>
-            </Panel>
+                </Card.Body>
+            </Card>
         );
     }
 }

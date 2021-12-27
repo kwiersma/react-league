@@ -1,9 +1,7 @@
 import * as React from "react";
 import {Component, FormEvent} from "react";
 import {FantasyTeam, Pick, Player} from "../model";
-import {Button, Col, Grid, Modal, Row} from "react-bootstrap";
-import BootstrapTable from "react-bootstrap-table-next";
-import paginationFactory from 'react-bootstrap-table2-paginator';
+import {Button, Col, Container, Modal, Row} from "react-bootstrap";
 import {PlayerFilter, PlayersFilter} from "./PlayerFilter";
 import {DraftOrder} from "./DraftOrder";
 import {TeamPlayers} from "./TeamPlayers";
@@ -297,7 +295,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
 
         return (
             <>
-                <Grid fluid={false}>
+                <Container fluid={false}>
                     <Row>
                         <Col xs={5} md={3} style={{paddingRight: "30px"}}>
                             <Row>
@@ -318,7 +316,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
                             </Row>
                         </Col>
                     </Row>
-                </Grid>
+                </Container>
                 <Modal show={this.state.showPlayerEdit} onHide={this.handleClosePlayerEdit}>
                     <Modal.Header closeButton>
                         <Modal.Title>Edit Player: {selectedPlayer?.firstname} {selectedPlayer?.lastname}</Modal.Title>
@@ -335,7 +333,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.handleClosePlayerEdit}>Close</Button>
-                        <Button bsStyle="primary" onClick={this.saveSelectedPlayer}>Save Player</Button>
+                        <Button variant="primary" onClick={this.saveSelectedPlayer}>Save Player</Button>
                     </Modal.Footer>
                 </Modal>
             </>
