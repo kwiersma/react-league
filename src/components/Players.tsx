@@ -1,13 +1,12 @@
 import * as React from "react";
 import {Component, FormEvent} from "react";
 import {FantasyTeam, Pick, Player} from "../model";
-import {Button, Col, Container, Modal, Row} from "react-bootstrap";
-import BootstrapTable from "react-bootstrap-table-next";
-import paginationFactory from "react-bootstrap-table2-paginator";
+import {Badge, Button, Col, Container, Modal, Row} from "react-bootstrap";
 import {PlayerFilter, PlayersFilter} from "./PlayerFilter";
 import {DraftOrder} from "./DraftOrder";
 import {TeamPlayers} from "./TeamPlayers";
 import {draftAPI} from "../api";
+import DataTable, {TableColumn} from "react-data-table-component";
 
 interface PlayersState {
     playersFilter: PlayersFilter;
@@ -75,7 +74,8 @@ export class Players extends Component<PlayersProps, PlayersState> {
                 currentPick = this.props.picks[0].pick;
             }
             this.setState({
-                currentPick: currentPick, currentRound: currentRound, selectedTeamID: currentTeamID });
+                currentPick: currentPick, currentRound: currentRound, selectedTeamID: currentTeamID
+            });
         }
     }
 
@@ -83,7 +83,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
         name = name.replace(/[[]/, '\\[').replace(/[\]]/, '\\]');
         var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
         var results = regex.exec(window.location.search);
-        var value: string = results ? decodeURIComponent(results[1].replace(/\+/g, ' ')) : '';
+        var value = results ? decodeURIComponent(results[1].replace(/\+/g, ' ')) : '';
         return value;
     }
 
@@ -119,13 +119,13 @@ export class Players extends Component<PlayersProps, PlayersState> {
     };
 
     handleClosePlayerEdit = () => {
-        this.setState({ showPlayerEdit: false, selectedPlayer: undefined });
+        this.setState({showPlayerEdit: false, selectedPlayer: undefined});
     }
 
     saveSelectedPlayer = () => {
-        const { picks } = this.props;
-        const { selectedTeamID, selectedPlayer } = this.state;
-        console.log('saveSelectedPlayer', { teamID: selectedTeamID, p: selectedPlayer });
+        const {picks} = this.props;
+        const {selectedTeamID, selectedPlayer} = this.state;
+        console.log('saveSelectedPlayer', {teamID: selectedTeamID, p: selectedPlayer});
 
         let currentRound = 0;
         let currentPick = 0;
@@ -136,14 +136,18 @@ export class Players extends Component<PlayersProps, PlayersState> {
 
         if (selectedPlayer && selectedTeamID) {
             selectedPlayer.fantasyteam_id = parseInt(selectedTeamID);
-            console.log('about to call savePlayer', { p: this.state.selectedPlayer, r: currentRound, pick: currentPick });
+            console.log('about to call savePlayer', {
+                p: this.state.selectedPlayer,
+                r: currentRound,
+                pick: currentPick
+            });
             draftAPI.savePlayer(selectedPlayer, currentRound, currentPick);
         }
-        this.setState({ showPlayerEdit: false, selectedPlayer: undefined });
+        this.setState({showPlayerEdit: false, selectedPlayer: undefined});
     }
 
     handleShowPlayerEdit = (player: Player) => {
-        this.setState({ showPlayerEdit: true, selectedPlayer: player });
+        this.setState({showPlayerEdit: true, selectedPlayer: player});
     }
 
     public handleSelectedTeamChange = (e: FormEvent<HTMLSelectElement>) => {
@@ -159,7 +163,8 @@ export class Players extends Component<PlayersProps, PlayersState> {
             filteredPlayers = [];
         }
 
-        let defaultSorted = [{ dataField: 'rank', order: 'asc' }];
+        let defaultSorted = "rank";
+        let defaultSortAsc = true;
 
         let filterRow = <></>;
         let teamPlayers = <></>;
@@ -171,121 +176,78 @@ export class Players extends Component<PlayersProps, PlayersState> {
             );
             teamPlayers = <TeamPlayers players={players} teams={teams}/>
         } else {
-            defaultSorted = [{dataField: "pickNo", order: "desc"}];
+            defaultSorted = "pickNo";
+            defaultSortAsc = false;
         }
 
-        const playerNameFormatter = (cell: any, row: any) => {
-            return (
-                <>
-                    <a href={row.url}
-                       target="_blank" rel="noopener noreferrer">{row.lastname}, {row.firstname}</a><br/>
-                    <span style={{fontSize: '10px', paddingRight: '4px'}}>{row.team} - {row.position}</span>
-                    <span className="label label-danger">{row.nfl_status}</span>
-                </>);
-        };
-
-        const teamNameFormatter = (cell: any, row: Player) => {
-            const team = row.fantasyteam ? <div>{row.fantasyteam} ({row.owner})</div> : null;
-            let editBtn = <></>;
-            if (isEditMode && !row.fantasyteam) {
-                editBtn = <Button onClick={() => this.handleShowPlayerEdit(row)}>Edit</Button>
-            }
-            return (
-                <div>
-                    {team}
-                    {editBtn}
-                </div>
-            );
-        };
-
-        const roundFormatter = (cell: any, row: any) => {
-            return (
-                <span>R {row.round} P {row.pick}</span>
-            );
-        };
-
-        const columns = [
+        const columns: TableColumn<Player>[] = [
             {
-                dataField: 'lastname',
-                text: 'Player',
-                sort: true,
-                formatter: playerNameFormatter,
-                style: {
-                    width: '15%'
-                },
-                headerStyle: {
-                    width: '15%'
-                }
+                name: 'Player',
+                selector: (row: Player) => row.lastname,
+                sortable: true,
+                wrap: true,
+                width: '20%',
+                cell: (row: Player) => (
+                    <div>
+                        <a href={row.url}
+                           target="_blank" rel="noopener noreferrer">{row.lastname}, {row.firstname}</a> <br/>
+                        <span
+                            style={{fontSize: '10px', paddingRight: '4px'}}>{row.team} - {row.position}</span>
+                        <Badge variant="danger">{row.nfl_status}</Badge>
+                    </div>
+                ),
             },
             {
-                dataField: 'rank',
-                text: 'Rank',
-                sort: true,
-                style: {
-                    width: '8%'
-                },
-                headerStyle: {
-                    width: '8%'
-                }
-            }, {
-                dataField: 'points',
-                text: 'Pts',
-                sort: true,
-                style: {
-                    width: '8%'
-                },
-                headerStyle: {
-                    width: '8%'
-                }
-            }, {
-                dataField: 'byeweek',
-                text: 'Bye',
-                sort: true,
-                style: {
-                    width: '8%'
-                },
-                headerStyle: {
-                    width: '8%'
-                }
-            }, {
-                dataField: 'avgpick',
-                text: 'ADP',
-                sort: true,
-                style: {
-                    width: '8%'
-                },
-                headerStyle: {
-                    width: '8%'
-                }
-            }, {
-                text: 'R, P',
-                sort: false,
-                style: {
-                    width: '8%'
-                },
-                headerStyle: {
-                    width: '8%'
-                },
-                formatter: roundFormatter
-            }, {
-                dataField: 'fantasyteam',
-                text: 'Fantasy Team',
-                sort: true,
-                style: {
-                    width: '20%'
-                },
-                headerStyle: {
-                    width: '20%'
-                },
-                formatter: teamNameFormatter
+                name: 'Rank',
+                id: 'rank',
+                width: '11%',
+                selector: (row: Player) => row.rank,
+                sortable: true,
             },
             {
-                dataField: 'pickNo',
-                text: 'Pick #',
-                sort: true,
-                hidden: true,
-            }
-        ];
+                name: 'Pts',
+                selector: (row: Player) => row.points,
+                sortable: true,
+                width: '10%',
+            },
+            {
+                name: 'Bye',
+                selector: (row: Player) => row.byeweek,
+                width: '10%',
+            },
+            {
+                name: 'ADP',
+                selector: (row: Player) => row.avgpick,
+                sortable: true,
+                width: '11%',
+            },
+            {
+                name: 'Pick #',
+                id: 'pickNo',
+                selector: (row: Player) => row.pickNo,
+                sortable: true,
+                width: '11%',
+            },
+            {
+                name: 'Fantasy Team',
+                selector: (row: Player) => row.fantasyteam,
+                sortable: true,
+                width: '30%',
+                cell: (row: Player) => {
+                    const team = row.fantasyteam ? <div>{row.fantasyteam} ({row.owner})</div> : null;
+                    let editBtn = <></>;
+                    if (isEditMode && !row.fantasyteam) {
+                        editBtn = <Button onClick={() => this.handleShowPlayerEdit(row)}>Edit</Button>
+                    }
+                    return (
+                        <div>
+                            {team}
+                            {editBtn}
+                        </div>
+                    );
+                },
+            },
+        ]
 
         const teamRows = teams.map((team, idx) => {
             return (
@@ -297,7 +259,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
 
         return (
             <>
-                <Container fluid={false}>
+                <Container style={{marginRight: '25px', marginLeft: '25px'}}>
                     <Row>
                         <Col xs={5} md={3} style={{paddingRight: "30px"}}>
                             <Row>
@@ -308,24 +270,27 @@ export class Players extends Component<PlayersProps, PlayersState> {
                         <Col xs={12} md={9}>
                             {filterRow}
                             <Row>
-                                <BootstrapTable
-                                    keyField='id'
+                                <DataTable
                                     data={filteredPlayers}
                                     columns={columns}
-                                    defaultSorted={defaultSorted}
-                                    pagination={paginationFactory()}
-                                    bordered={false} striped={true} condensed={true}/>
+                                    pagination
+                                    striped
+                                    defaultSortFieldId={defaultSorted}
+                                    defaultSortAsc={defaultSortAsc}
+                                />
                             </Row>
                         </Col>
                     </Row>
                 </Container>
                 <Modal show={this.state.showPlayerEdit} onHide={this.handleClosePlayerEdit}>
                     <Modal.Header closeButton>
-                        <Modal.Title>Edit Player: {selectedPlayer?.firstname} {selectedPlayer?.lastname}</Modal.Title>
+                        <Modal.Title>
+                            Edit Player: {selectedPlayer?.firstname} {selectedPlayer?.lastname}
+                        </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        <strong>Player: </strong> {selectedPlayer?.firstname} {selectedPlayer?.lastname}<br />
-                        <strong>Round &amp; Pick: </strong> {currentRound} - {currentPick} <br />
+                        <strong>Player: </strong> {selectedPlayer?.firstname} {selectedPlayer?.lastname}<br/>
+                        <strong>Round &amp; Pick: </strong> {currentRound} - {currentPick} <br/>
                         <strong>Team:</strong>
                         <select className="form-control"
                                 onChange={this.handleSelectedTeamChange}
