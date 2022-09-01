@@ -135,7 +135,7 @@ class App extends React.Component<{}, State> {
                         <Redirect to="/teams" />
                     </Switch>
                     <Picks picks={picks} />
-                    <ToastContainer />
+                    <ToastContainer theme="colored" />
                 </div>
             </BrowserRouter>
         );

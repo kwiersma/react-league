@@ -1,21 +1,19 @@
 import * as React from "react";
 import {Component} from "react";
-import {Nav, Navbar, NavItem} from "react-bootstrap";
+import {Nav, Navbar} from "react-bootstrap";
 import {LinkContainer} from "react-router-bootstrap";
 
 export class Navigation extends Component {
     public render() {
         return (
-            <Navbar inverse={true} fixedTop={true}>
-                <Navbar.Header>
-                    <Navbar.Brand>Ghetto League</Navbar.Brand>
-                </Navbar.Header>
+            <Navbar bg="dark" variant="dark" fixed="top">
+                <Navbar.Brand>Ghetto League</Navbar.Brand>
                 <Nav>
                     <LinkContainer to="/players">
-                        <NavItem eventKey={1}>Players</NavItem>
+                        <Nav.Link eventKey={1}>Players</Nav.Link>
                     </LinkContainer>
                     <LinkContainer to="/teams">
-                        <NavItem eventKey={2}>Teams</NavItem>
+                        <Nav.Link eventKey={2}>Teams</Nav.Link>
                     </LinkContainer>
                 </Nav>
             </Navbar>

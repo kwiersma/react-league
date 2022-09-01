@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Component} from "react";
 import {FantasyTeam, Pick} from "../model";
-import {Label, ListGroup, ListGroupItem} from "react-bootstrap";
+import {Badge, ListGroup} from "react-bootstrap";
 import FlipMove from "react-flip-move";
 
 interface DraftOrderProps {
@@ -87,19 +87,19 @@ export class DraftOrder extends Component<DraftOrderProps, {}> {
         const teamRows = pickRows.map((row, idx) => {
             let itemStyle = {};
             let itemClass = "";
-            let labelClass = "success";
+            let labelClass = "primary";
             let label = <></>;
             if (row.rowType !== 'round') {
                 if (idx === 1) {
-                    itemClass = "alert alert-danger";
+                    itemClass = "danger";
                     labelClass = "danger";
                 } else if (idx === 2) {
-                    itemClass = "alert alert-warning";
+                    itemClass = "warning";
                     labelClass = "warning";
                 }
                 label = (
                     <>
-                        <Label bsStyle={labelClass}>{row.pickNo}.</Label>
+                        <Badge pill variant={labelClass}>{row.pickNo}.</Badge>
                         <span style={{paddingLeft: '5px'}}>
                             {row.name}
                         </span>
@@ -115,9 +115,9 @@ export class DraftOrder extends Component<DraftOrderProps, {}> {
             }
 
             return (
-                <ListGroupItem key={idx} className={itemClass} style={itemStyle}>
+                <ListGroup.Item key={idx} variant={itemClass} style={itemStyle}>
                     {label}
-                </ListGroupItem>
+                </ListGroup.Item>
             );
 
         });

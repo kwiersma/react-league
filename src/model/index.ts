@@ -26,6 +26,7 @@ export class Player {
     public avgpick: number = 0;
     public byeweek: number = 0;
     public pickNo: number = 0;
+    public nfl_status: string = "";
 
 }
 

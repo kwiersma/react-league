@@ -1,6 +1,4 @@
-import "bootstrap/dist/css/bootstrap-theme.css";
-import "bootstrap/dist/css/bootstrap.css";
-import 'react-bootstrap-table-next/dist/react-bootstrap-table2.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
 import "./index.css";
 
 import React from 'react';
@@ -9,10 +7,10 @@ import App from "./App";
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <React.StrictMode>
+        <App/>
+    </React.StrictMode>,
+    document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

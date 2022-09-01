@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Component} from "react";
 import {FantasyTeam} from "../model";
-import {Grid, PageHeader, Row, Table} from "react-bootstrap";
+import {Container, Row, Table} from "react-bootstrap";
 
 interface TeamsProps {
     teams: FantasyTeam[];
@@ -27,9 +27,9 @@ export class Teams extends Component<TeamsProps, {}> {
         });
 
         return (
-            <Grid>
+            <Container>
                 <Row>
-                    <PageHeader>Teams</PageHeader>
+                    <h1>Teams</h1>
                 </Row>
                 <Row>
                     <Table striped={true}>
@@ -45,7 +45,7 @@ export class Teams extends Component<TeamsProps, {}> {
                         </tbody>
                     </Table>
                 </Row>
-            </Grid>
+            </Container>
         );
     }
 }
