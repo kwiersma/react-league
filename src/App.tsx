@@ -1,5 +1,5 @@
 import React from "react";
-import Pusher from 'pusher-js';
+import Pusher, { Channel } from 'pusher-js';
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import "./App.css";
 import { Navigation } from "./components/Navigation";
@@ -21,6 +21,8 @@ interface State {
 class App extends React.Component<{}, State> {
 
     currentPick: number = 0;
+    pusher: Pusher | undefined;
+    channel: Channel | undefined;
 
     constructor(props: {}) {
         super(props);
@@ -44,15 +46,24 @@ class App extends React.Component<{}, State> {
             this.setState({ picks });
         });
 
-        const pusher = new Pusher('1c799ff10581875222b7', { 'cluster': 'mt1' });
-        const channel = pusher.subscribe('draftedPlayers');
-        channel.bind('playerDrafted', (data: any) => {
+        this.pusher = new Pusher('1c799ff10581875222b7', { 'cluster': 'mt1' });
+        this.channel = this.pusher.subscribe('draftedPlayers');
+        this.channel.bind('playerDrafted', (data: any) => {
             console.log("playerDrafted notification received", data);
             toast.success(data[2].player + " was picked by " + data[2].owner);
             this.setState({ showPickbar: false, picks: data }, () => {
                 this.processPicks();
             });
         });
+    }
+
+    componentWillUnmount() {
+        if (this.channel) {
+            this.channel.unbind_all();
+        }
+        if (this.pusher) {
+            this.pusher.unsubscribe('draftedPlayers');
+        }
     }
 
     processPicks() {
