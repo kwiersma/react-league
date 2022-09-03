@@ -5,7 +5,7 @@
   "proxy": "http://localhost:8000",
   "dependencies": {
     "bootstrap": "^4.6.1",
-    "pusher-js": "^7.3.0",
+    "pusher-js": "^7.4.0",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.4",
     "react-data-table-component": "^7.5.2",
@@ -21,7 +21,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && cp -r ./build ~/Projects/Python/djleague",
+    "ci-build": "react-scripts build",
     "test": "react-scripts test",
+    "ci-test": "CI=true react-scripts test --watchAll=false --forceExit",
     "eject": "react-scripts eject"
   },
   "devDependencies": {
