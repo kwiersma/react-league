@@ -46,30 +46,30 @@ export class Picks extends Component<PicksProps, PicksState> {
                 <tbody>
                 <tr style={{verticalAlign: "top"}}>
                     <td style={{textAlign: "right"}}>
-                        <Badge variant="danger">On the clock: </Badge>
+                        <Badge bg="danger">On the clock: </Badge>
                     </td>
                     <td>
                         {picks[0].fantasyteam} ({picks[0].owner})
                         (R {picks[0].round} P {picks[0].pick})
                     </td>
                     <td style={{textAlign: "right"}}>
-                        <Badge variant="success">Last Pick: </Badge>
+                        <Badge bg="success">Last Pick: </Badge>
                     </td>
                     {lastPickCell}
                     <td rowSpan={2} align="center">
                         <Timer startTime={pickTimerStart}/>
-                        <Badge variant="danger">On the clock</Badge>
+                        <Badge bg="danger">On the clock</Badge>
                     </td>
                 </tr>
                 <tr>
                     <td style={{textAlign: "right"}}>
-                        <Badge variant="warning">On deck:</Badge>
+                        <Badge bg="warning">On deck:</Badge>
                     </td>
                     <td>
                         {picks[1].fantasyteam} ({picks[1].owner})
                     </td>
                     <td style={{textAlign: "right"}}>
-                        <Badge variant="success">Before Last Pick: </Badge>
+                        <Badge bg="success">Before Last Pick: </Badge>
                     </td>
                     {beforeLastCell}
                 </tr>
@@ -164,7 +164,7 @@ class Timer extends React.Component<TimerProps, TimerState> {
 
     render() {
         const {output} = this.state;
-        return <p style={{color: "black", fontSize: "20px", fontWeight: "bold"}}
+        return <p style={{fontSize: "20px", fontWeight: "bold"}}
                   id="pickClock">{output}</p>;
     }
 }

@@ -99,7 +99,7 @@ export class DraftOrder extends Component<DraftOrderProps, {}> {
                 }
                 label = (
                     <>
-                        <Badge pill variant={labelClass}>{row.pickNo}.</Badge>
+                        <Badge pill bg={labelClass}>{row.pickNo}.</Badge>
                         <span style={{paddingLeft: '5px'}}>
                             {row.name}
                         </span>

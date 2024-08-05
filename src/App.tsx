@@ -1,6 +1,6 @@
 import React from "react";
 import Pusher, { Channel } from 'pusher-js';
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Navigation } from "./components/Navigation";
 import { Teams } from "./components/Teams";
@@ -133,22 +133,21 @@ class App extends React.Component<{}, State> {
 
     public render() {
         const { teams, players, picks } = this.state;
-
         return (
-            <BrowserRouter basename="/draft2">
-                <div>
-                    <Navigation />
-                    <Switch>
-                        <Route exact={true} path="/teams"
-                            render={() => <Teams teams={teams} />} />
-                        <Route exact={true} path="/players"
-                            render={() => <Players players={players} teams={teams} picks={picks} />} />
-                        <Redirect to="/teams" />
-                    </Switch>
-                    <Picks picks={picks} />
-                    <ToastContainer theme="colored" />
-                </div>
-            </BrowserRouter>
+            <>
+                <Navigation />
+                <Routes>
+                    <Route path="/draft2">
+                        <Route path="/draft2/teams"
+                            element={<Teams teams={teams} />} />
+                        <Route path="/draft2/players"
+                            element={<Players players={players} teams={teams} picks={picks} />} />
+                        <Route path="*" element={<Teams teams={teams} />} />
+                    </Route>
+                </Routes>
+                <Picks picks={picks} />
+                <ToastContainer theme="colored" />
+            </>
         );
     }
 }
