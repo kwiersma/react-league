@@ -257,6 +257,11 @@ export class Players extends Component<PlayersProps, PlayersState> {
             );
         });
 
+        var tableTheme = "";
+        if (document?.querySelector("html")?.getAttribute("data-bs-theme") === "dark") {
+            tableTheme = "dark";
+        }
+
         return (
             <>
                 <Container fluid>
@@ -271,6 +276,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
                             {filterRow}
                             <Row>
                                 <DataTable
+                                    theme={tableTheme}
                                     data={filteredPlayers}
                                     columns={columns}
                                     pagination
@@ -282,7 +288,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
                         </Col>
                     </Row>
                 </Container>
-                
+
                 <Modal show={this.state.showPlayerEdit} onHide={this.handleClosePlayerEdit}>
                     <Modal.Header closeButton>
                         <Modal.Title>
