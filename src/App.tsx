@@ -1,6 +1,6 @@
 import React from "react";
 import Pusher, { Channel } from 'pusher-js';
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "./App.css";
 import { Navigation } from "./components/Navigation";
 import { Teams } from "./components/Teams";
@@ -142,8 +142,9 @@ class App extends React.Component<{}, State> {
                             element={<Teams teams={teams} />} />
                         <Route path="/draft2/players"
                             element={<Players players={players} teams={teams} picks={picks} />} />
-                        <Route path="*" element={<Teams teams={teams} />} />
+                        <Route path="/draft2" element={<Navigate to="/draft2/players" replace />} />
                     </Route>
+                    <Route path="*" element={<Navigate to="/draft2/players" replace />} />
                 </Routes>
                 <Picks picks={picks} />
                 <ToastContainer theme="colored" />
