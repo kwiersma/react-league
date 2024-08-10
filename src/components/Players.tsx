@@ -42,12 +42,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
             isEditMode = true;
         }
 
-        let currentTeamID = "";
-        if (props.picks.length > 0) {
-            currentTeamID = props.picks[0].fantasyteam_id;
-        } else if (props.teams[0]) {
-            currentTeamID = props.teams[0].id.toString();
-        }
+        let currentTeamID = this.determineCurrentTeamID();
 
         this.state = {
             playersFilter: playersFilter,
@@ -65,7 +60,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
                        prevState: Readonly<PlayersState>,
                        snapshot?: any): void {
         if (prevProps.picks !== this.props.picks) {
-            let currentTeamID = '0';
+            let currentTeamID = this.determineCurrentTeamID();
             let currentRound = 0;
             let currentPick = 0;
             if (this.props.picks.length > 0) {
@@ -90,6 +85,17 @@ export class Players extends Component<PlayersProps, PlayersState> {
     public onPlayersFilterChange = (playersFilter: PlayersFilter) => {
         this.setState({playersFilter});
     };
+
+    private determineCurrentTeamID(): string {
+        const {picks, teams} = this.props;
+        let currentTeamID = "";
+        if (picks.length > 0 && picks[0].fantasyteam_id !== "") {
+            currentTeamID = picks[0].fantasyteam_id;
+        } else if (teams.length > 0) {
+            currentTeamID = teams[0].id.toString();
+        }
+        return currentTeamID;
+    }
 
     private filterPlayers = (): Player[] => {
         let playersFilter = this.state.playersFilter;
@@ -147,7 +153,8 @@ export class Players extends Component<PlayersProps, PlayersState> {
     }
 
     handleShowPlayerEdit = (player: Player) => {
-        this.setState({showPlayerEdit: true, selectedPlayer: player});
+        let currentTeamID = this.determineCurrentTeamID();
+        this.setState({showPlayerEdit: true, selectedPlayer: player, selectedTeamID: currentTeamID});
     }
 
     public handleSelectedTeamChange = (e: FormEvent<HTMLSelectElement>) => {
