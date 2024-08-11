@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Component, FormEvent} from "react";
 import {FantasyTeam, Player} from "../model";
-import {Card, Table} from "react-bootstrap";
+import {Card, Form, Table} from "react-bootstrap";
 
 interface TeamPlayersState {
     filteredPlayers: Player[];
@@ -75,12 +75,11 @@ export class TeamPlayers extends Component<TeamPlayersProps, TeamPlayersState> {
         return (
             <Card>
                 <Card.Header>
-                    <select
-                        className="form-control"
+                    <Form.Select
                         value={this.state.selectedTeamID}
                         onChange={this.handleSelectedTeamChange}>
                         {teamRows}
-                    </select>
+                    </Form.Select>
                 </Card.Header>
                 <Card.Body>
                     <Table striped={true}>

@@ -2,3 +2,6 @@
   text-align: center;
 }
 
+a.active {
+  border-bottom: solid #C83803 2px;
+}

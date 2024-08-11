@@ -1,7 +1,7 @@
 import * as React from "react";
 import {Component, FormEvent} from "react";
 import {FantasyTeam, Pick, Player} from "../model";
-import {Badge, Button, Col, Container, Modal, Row} from "react-bootstrap";
+import {Badge, Button, Col, Container, Form, Modal, Row} from "react-bootstrap";
 import {PlayerFilter, PlayersFilter} from "./PlayerFilter";
 import {DraftOrder} from "./DraftOrder";
 import {TeamPlayers} from "./TeamPlayers";
@@ -42,12 +42,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
             isEditMode = true;
         }
 
-        let currentTeamID = "";
-        if (props.picks.length > 0) {
-            currentTeamID = props.picks[0].fantasyteam_id;
-        } else if (props.teams[0]) {
-            currentTeamID = props.teams[0].id.toString();
-        }
+        let currentTeamID = this.determineCurrentTeamID();
 
         this.state = {
             playersFilter: playersFilter,
@@ -65,7 +60,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
                        prevState: Readonly<PlayersState>,
                        snapshot?: any): void {
         if (prevProps.picks !== this.props.picks) {
-            let currentTeamID = '0';
+            let currentTeamID = this.determineCurrentTeamID();
             let currentRound = 0;
             let currentPick = 0;
             if (this.props.picks.length > 0) {
@@ -90,6 +85,17 @@ export class Players extends Component<PlayersProps, PlayersState> {
     public onPlayersFilterChange = (playersFilter: PlayersFilter) => {
         this.setState({playersFilter});
     };
+
+    private determineCurrentTeamID(): string {
+        const {picks, teams} = this.props;
+        let currentTeamID = "";
+        if (picks.length > 0 && picks[0].fantasyteam_id !== "") {
+            currentTeamID = picks[0].fantasyteam_id;
+        } else if (teams.length > 0) {
+            currentTeamID = teams[0].id.toString();
+        }
+        return currentTeamID;
+    }
 
     private filterPlayers = (): Player[] => {
         let playersFilter = this.state.playersFilter;
@@ -147,7 +153,8 @@ export class Players extends Component<PlayersProps, PlayersState> {
     }
 
     handleShowPlayerEdit = (player: Player) => {
-        this.setState({showPlayerEdit: true, selectedPlayer: player});
+        let currentTeamID = this.determineCurrentTeamID();
+        this.setState({showPlayerEdit: true, selectedPlayer: player, selectedTeamID: currentTeamID});
     }
 
     public handleSelectedTeamChange = (e: FormEvent<HTMLSelectElement>) => {
@@ -193,7 +200,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
                            target="_blank" rel="noopener noreferrer">{row.lastname}, {row.firstname}</a> <br/>
                         <span
                             style={{fontSize: '10px', paddingRight: '4px'}}>{row.team} - {row.position}</span>
-                        <Badge variant="danger">{row.nfl_status}</Badge>
+                        <Badge bg="danger">{row.nfl_status}</Badge>
                     </div>
                 ),
             },
@@ -257,11 +264,16 @@ export class Players extends Component<PlayersProps, PlayersState> {
             );
         });
 
+        var tableTheme = "";
+        if (document?.querySelector("html")?.getAttribute("data-bs-theme") === "dark") {
+            tableTheme = "dark";
+        }
+
         return (
             <>
-                <Container style={{marginRight: '25px', marginLeft: '25px'}}>
+                <Container fluid>
                     <Row>
-                        <Col xs={5} md={3} style={{paddingRight: "30px"}}>
+                        <Col xs={5} md={3} style={{paddingRight: "20px"}}>
                             <Row>
                                 <DraftOrder teams={teams} picks={picks}/>
                                 {teamPlayers}
@@ -271,6 +283,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
                             {filterRow}
                             <Row>
                                 <DataTable
+                                    theme={tableTheme}
                                     data={filteredPlayers}
                                     columns={columns}
                                     pagination
@@ -282,6 +295,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
                         </Col>
                     </Row>
                 </Container>
+
                 <Modal show={this.state.showPlayerEdit} onHide={this.handleClosePlayerEdit}>
                     <Modal.Header closeButton>
                         <Modal.Title>
@@ -292,11 +306,11 @@ export class Players extends Component<PlayersProps, PlayersState> {
                         <strong>Player: </strong> {selectedPlayer?.firstname} {selectedPlayer?.lastname}<br/>
                         <strong>Round &amp; Pick: </strong> {currentRound} - {currentPick} <br/>
                         <strong>Team:</strong>
-                        <select className="form-control"
-                                onChange={this.handleSelectedTeamChange}
-                                value={this.state.selectedTeamID}>
+                        <Form.Select
+                            onChange={this.handleSelectedTeamChange}
+                            value={this.state.selectedTeamID}>
                             {teamRows}
-                        </select>
+                        </Form.Select>
                     </Modal.Body>
                     <Modal.Footer>
                         <Button onClick={this.handleClosePlayerEdit}>Close</Button>
