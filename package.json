@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && cp -r ./build ~/Projects/Python/djleague",
+    "build": "react-scripts build && rm -r ~/Projects/Python/djleague/build && cp -r ./build ~/Projects/Python/djleague",
     "ci-build": "react-scripts build",
     "test": "react-scripts test",
     "ci-test": "CI=true react-scripts test --watchAll=false --forceExit",
