@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -8,24 +8,20 @@
       manifest.json provides metadata used when your web app is added to the
       homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
     -->
-    <link rel="manifest" href="/static/manifest.json">
-    <link rel="shortcut icon" href="/static/favicon.ico">
+    <link rel="manifest" href="/static/manifest.json" />
+    <link rel="shortcut icon" href="/static/favicon.ico" />
     <title>Ghetto League</title>
   </head>
   <body>
-    <noscript>
-      You need to enable JavaScript to run this app.
-    </noscript>
+    <noscript> You need to enable JavaScript to run this app. </noscript>
     <div id="root"></div>
     <script type="module" src="/src/index.tsx"></script>
   </body>
   <script>
     // Set theme to the user's preferred color scheme
     function updateTheme() {
-      const colorMode = window.matchMedia("(prefers-color-scheme: dark)").matches ?
-          "dark" :
-          "light";
-      document.querySelector("html").setAttribute("data-bs-theme", colorMode);
+      const colorMode = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      document.querySelector('html').setAttribute('data-bs-theme', colorMode);
     }
 
     // Set theme on load
