@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "eslint.config.js"  ]
 }

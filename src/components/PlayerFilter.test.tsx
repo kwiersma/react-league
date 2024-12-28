@@ -1,19 +1,23 @@
-import * as React from "react";
-import { PlayerFilter, PlayersFilter } from "./PlayerFilter";
-import { render, fireEvent } from "@testing-library/react";
+import { render, fireEvent, screen } from '@testing-library/react';
+import * as React from 'react';
+import { describe, it, expect, vi } from 'vitest';
 
-test("should render last name field", async () => {
-    const changeHandler = jest.fn();
-    const { getByLabelText } = render(<PlayerFilter onChange={changeHandler} />);
+import { PlayerFilter, PlayersFilter } from './PlayerFilter';
 
-    const input = getByLabelText("Last name:") as HTMLInputElement;
+describe('PlayerFilter', () => {
+  it('should render last name field', async () => {
+    const changeHandler = vi.fn();
+    render(<PlayerFilter onChange={changeHandler} />);
+
+    const input = screen.getByLabelText('Last name:') as HTMLInputElement;
     expect(input).toBeInTheDocument();
 
     fireEvent.change(input, { target: { value: 'a' } });
 
     expect(input.value).toBe('a');
     expect(changeHandler).toHaveBeenCalledTimes(1);
-    let playerFilter = new PlayersFilter();
-    playerFilter.lastname = "a";
+    const playerFilter = new PlayersFilter();
+    playerFilter.lastname = 'a';
     expect(changeHandler).toHaveBeenCalledWith(playerFilter);
+  });
 });

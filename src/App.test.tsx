@@ -1,11 +1,19 @@
-import * as React from "react";
-import App from "./App";
-import { render } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
+import { render, screen } from '@testing-library/react';
+import * as React from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { describe, it, expect } from 'vitest';
 
-test("should render app", async () => {
-  const { getByText } = render(<BrowserRouter><App /></BrowserRouter>);
+import App from './App';
 
-  const navbar = getByText("Ghetto League 2024");
-  expect(navbar).toBeInTheDocument();
+describe('should render app', () => {
+  it('should render headline', async () => {
+    render(
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>,
+    );
+
+    const navbar = screen.getByText('Ghetto League 2024');
+    expect(navbar).toBeInTheDocument();
+  });
 });

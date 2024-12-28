@@ -13,38 +13,51 @@
     "react-flip-move": "^3.0.5",
     "react-router-bootstrap": "^0.26.3",
     "react-router-dom": "^6.26.0",
-    "react-scripts": "^5.0.1",
     "react-toastify": "^8.1.0",
-    "styled-components": "^5.3.5",
-    "ts-jest": "^29.1.4"
+    "styled-components": "^5.3.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build && rm -r ~/Projects/Python/djleague/build && cp -r ./build ~/Projects/Python/djleague",
-    "ci-build": "react-scripts build",
-    "test": "react-scripts test",
-    "ci-test": "CI=true react-scripts test --watchAll=false --forceExit",
-    "eject": "react-scripts eject"
+    "start": "vite",
+    "build": "vite build && rm -r ~/Projects/Python/djleague/build && cp -r ./build ~/Projects/Python/djleague",
+    "ci-build": "tsc && vite build",
+    "test": "vitest",
+    "ci-test": "CI=true vitest",
+    "serve": "vite preview",
+    "lint": "eslint src --ignore-path .gitignore --fix",
+    "format": "prettier . --write"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^12.1.2",
+    "@eslint/eslintrc": "^3.0.2",
+    "@testing-library/jest-dom": "^5.17.0",
+    "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.0.3",
-    "@types/node": "^16.11.14",
+    "@types/node": "^18.0.0",
     "@types/react": "^17.0.37",
     "@types/react-bootstrap": "^0.32.37",
     "@types/react-dom": "^17.0.11",
     "@types/react-router-bootstrap": "^0.26.6",
     "@types/react-router-dom": "^5.3.3",
+    "@typescript-eslint/eslint-plugin": "^5.36.2",
+    "@typescript-eslint/parser": "^5.40.0",
+    "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "8",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-jest-dom": "^5.4.0",
+    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-react": "^7.34.1",
+    "eslint-plugin-react-hooks": "^4.6.2",
+    "eslint-plugin-testing-library": "^6.2.2",
+    "eslint-plugin-vitest": "^0.5.4",
+    "jsdom": "^25.0.1",
+    "prettier": "^3.4.2",
     "typescript": "^4.5.4",
+    "vite": "^6.0.6",
+    "vite-plugin-eslint": "^1.8.1",
+    "vitest": "^2.1.8",
     "web-vitals": "^2.1.4"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
   },
   "browserslist": {
     "production": [
