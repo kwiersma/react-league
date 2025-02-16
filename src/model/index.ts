@@ -1,45 +1,39 @@
 export class FantasyTeam {
-
-    public id: number = 0;
-    public name: string = "";
-    public owner: string = "";
-    public draftorder: number = 0;
-
+  public id = 0;
+  public name = '';
+  public owner = '';
+  public draftorder = 0;
 }
 
 export class Player {
-
-    public id: number = 0;
-    public firstname: string = "";
-    public lastname: string = "";
-    public pick: number = 0;
-    public points: number = 0;
-    public position: string = "";
-    public rank: number = 0;
-    public round: number = 0;
-    public team: string = "";
-    public url: string = "";
-    public fantasyteam: string = "";
-    public owner: string = "";
-    public fantasyteam_id: number = 0;
-    public picktime: string = "";
-    public avgpick: number = 0;
-    public byeweek: number = 0;
-    public pickNo: number = 0;
-    public nfl_status: string = "";
-
+  public id = 0;
+  public firstname = '';
+  public lastname = '';
+  public pick = 0;
+  public points = 0;
+  public position = '';
+  public rank = 0;
+  public round = 0;
+  public team = '';
+  public url = '';
+  public fantasyteam = '';
+  public owner = '';
+  public fantasyteam_id = 0;
+  public picktime = '';
+  public avgpick = 0;
+  public byeweek = 0;
+  public pickNo = 0;
+  public nfl_status = '';
 }
 
 export class Pick {
-
-    public fantasyteam: string = "";
-    public fantasyteam_id: string = "";
-    public owner: string = "";
-    public player: string = "";
-    public player_id: number = 0;
-    public round: number = 0;
-    public pick: number = 0;
-    public picktime: string = "";
-    public pickNo: number = 0;
-
+  public fantasyteam = '';
+  public fantasyteam_id = '';
+  public owner = '';
+  public player = '';
+  public player_id = 0;
+  public round = 0;
+  public pick = 0;
+  public picktime = '';
+  public pickNo = 0;
 }

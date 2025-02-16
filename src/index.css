@@ -1,14 +1,14 @@
 body {
-    margin: 0 0 100px;
-    padding: 70px 0;
-    font-family: sans-serif;
-    font-size: 0.9rem;
+  margin: 0 0 100px;
+  padding: 70px 0;
+  font-family: sans-serif;
+  font-size: 0.9rem;
 }
 
 table#picksTable {
-    width: 100%;
+  width: 100%;
 }
 
 table#picksTable tr td {
-    padding: 3px;
+  padding: 3px;
 }
