@@ -15,7 +15,7 @@ export class Navigation extends Component {
         data-bs-theme="dark"
       >
         <Container fluid>
-          <Navbar.Brand style={{ marginRight: '30px' }}>Ghetto League 2024</Navbar.Brand>
+          <Navbar.Brand style={{ marginRight: '30px' }}>Ghetto League 2025</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav>
