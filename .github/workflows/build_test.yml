@@ -8,11 +8,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - name: Use Node.js 22
-        uses: actions/setup-node@v4
+      - uses: voidzero-dev/setup-vp@v1
         with:
-          node-version: 22
-          cache: 'npm'
-      - run: npm ci
+          node-version: '22'
+          cache: true
       - run: npm run ci-build
       - run: npm run ci-test
