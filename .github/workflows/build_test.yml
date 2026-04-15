@@ -7,12 +7,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js 22
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: voidzero-dev/setup-vp@v1
         with:
-          node-version: 22
-          cache: 'npm'
+          node-version: '22'
+          cache: true
+          version: '0.1.16'
+          run-install: false
       - run: npm ci
       - run: npm run ci-build
       - run: npm run ci-test
