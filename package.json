@@ -38,11 +38,11 @@
     "@vitejs/plugin-react": "^5.1.4",
     "jsdom": "^28.1.0",
     "typescript": "^5.8.0",
-    "vite-plus": "latest"
+    "vite-plus": "0.1.16"
   },
   "overrides": {
-    "vite": "npm:@voidzero-dev/vite-plus-core@latest",
-    "vitest": "npm:@voidzero-dev/vite-plus-test@latest"
+    "vite": "npm:@voidzero-dev/vite-plus-core@0.1.16",
+    "vitest": "npm:@voidzero-dev/vite-plus-test@0.1.16"
   },
   "proxy": "http://127.0.0.1:8000"
 }
