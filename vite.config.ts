@@ -55,7 +55,5 @@ export default defineConfig({
     tabWidth: 2,
     trailingComma: 'all',
     semi: true,
-    // npm owns package.json formatting; excluding prevents conflicts with npm rewrites in CI
-    ignore: ['package.json', 'package-lock.json'],
   },
 });

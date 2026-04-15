@@ -1,0 +1,3 @@
+# Managed by npm — exclude from Oxfmt to avoid conflicts with npm's own JSON formatting
+package.json
+package-lock.json
