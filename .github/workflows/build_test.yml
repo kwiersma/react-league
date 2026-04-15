@@ -13,5 +13,7 @@ jobs:
           node-version: '22'
           cache: true
           version: '0.1.16'
+          run-install: false
+      - run: npm ci
       - run: npm run ci-build
       - run: npm run ci-test
