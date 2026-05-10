@@ -8,12 +8,13 @@ Fantasy football draft management web app (React + TypeScript). Frontend for a D
 
 ## Commands
 
-- **Dev server**: `npm start` (Vite, port 5173, proxies `/api2` to `http://127.0.0.1:8000`)
-- **Build**: `npm run ci-build` (type-check + bundle; `npm run build` also copies output to the Django project)
-- **Test**: `npm test` (Vitest, watch mode) or `npm run ci-test` (single run)
-- **Lint**: `npm run lint` (ESLint with auto-fix)
-- **Format**: `npm run format` (Prettier)
-- **Run single test**: `npx vitest run src/path/to/file.test.tsx`
+- **Dev server**: `npm start` (Vite+/vp, port 5173, proxies `/api2` to `http://127.0.0.1:8000`)
+- **Build**: `npm run ci-build` (check + bundle; `npm run build` also copies output to the Django project)
+- **Test**: `npm test` (Vitest via vp, watch mode) or `npm run ci-test` (single run)
+- **Lint**: `npm run lint` (Oxlint via `vp lint`)
+- **Format**: `npm run format` (Oxfmt via `vp fmt`)
+- **Check all**: `vp check` (format + lint + type-check in one pass)
+- **Run single test**: `npx vp test run src/path/to/file.test.tsx`
 
 ## Architecture
 
@@ -31,7 +32,7 @@ Fantasy football draft management web app (React + TypeScript). Frontend for a D
 
 ## Code Style
 
-- Prettier: 110 char width, single quotes, 2-space indent, trailing commas
-- ESLint enforces import ordering (grouped, alphabetized with newlines between groups) and no import cycles
-- `@typescript-eslint/no-explicit-any` is disabled
+- Oxfmt (replaces Prettier): 110 char width, single quotes, 2-space indent, trailing commas — configured in `vite.config.ts` `fmt` section
+- Oxlint (replaces ESLint): React rules configured in `vite.config.ts` `lint` section; no import ordering or cycle rules
+- `@typescript-eslint/no-explicit-any` equivalent is disabled
 - React class components are used throughout (not hooks)
