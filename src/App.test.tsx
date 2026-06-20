@@ -6,6 +6,16 @@ import { describe, it, expect, vi } from 'vitest';
 import { draftAPI } from './api';
 import App from './App';
 
+vi.mock('pusher-js', () => {
+  class MockPusher {
+    subscribe() {
+      return { bind: () => {}, unbind_all: () => {} };
+    }
+    unsubscribe() {}
+  }
+  return { default: MockPusher };
+});
+
 const returnEmptyArray = () => Promise.resolve([]);
 
 describe('should render app', () => {
