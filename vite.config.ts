@@ -1,3 +1,4 @@
+import path from 'node:path';
 import react from '@vitejs/plugin-react';
 import { defineConfig } from 'vitest/config';
 
@@ -24,6 +25,17 @@ export default defineConfig({
     },
   },
   plugins: [react()],
+  resolve: {
+    alias: {
+      // react-data-table-component has an empty "exports": {} in package.json which blocks
+      // Vite 8/Rolldown from using the ESM "module" field. The CJS wrapper produces
+      // `export default require_index_cjs()` which returns the whole exports object rather than
+      // the component, breaking the default import. Alias directly to the ESM bundle.
+      'react-data-table-component': path.resolve(
+        'node_modules/react-data-table-component/dist/index.es.js'
+      ),
+    },
+  },
   test: {
     globals: true,
     environment: 'jsdom',
