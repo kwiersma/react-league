@@ -34,7 +34,7 @@ describe('should render app', () => {
       </BrowserRouter>,
     );
 
-    const navbar = screen.getByText('Ghetto League 2025');
+    const navbar = screen.getByText('Ghetto League 2026');
     expect(navbar).toBeInTheDocument();
   });
 });

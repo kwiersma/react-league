@@ -15,7 +15,7 @@ const renderNavigation = () =>
 describe('Navigation', () => {
   it('renders brand text', () => {
     renderNavigation();
-    expect(screen.getByText('Ghetto League 2025')).toBeInTheDocument();
+    expect(screen.getByText('Ghetto League 2026')).toBeInTheDocument();
   });
 
   it('renders Players link with correct href', () => {
