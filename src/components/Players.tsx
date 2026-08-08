@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Component, FormEvent } from 'react';
 import { Badge, Button, Col, Container, Form, Modal, Row } from 'react-bootstrap';
-import DataTable, { TableColumn } from 'react-data-table-component';
+import DataTable, { TableColumn, Theme } from 'react-data-table-component';
 
 import { draftAPI } from '../api';
 import { FantasyTeam, Pick, Player } from '../model';
@@ -26,6 +26,28 @@ interface PlayersProps {
   teams: FantasyTeam[];
   picks: Pick[];
 }
+
+// Colors reference Bootstrap's own CSS variables so the table follows the app's
+// data-bs-theme attribute automatically, without any JS-side dark mode detection.
+const bootstrapTableTheme: Partial<Theme> = {
+  text: {
+    primary: 'var(--bs-body-color)',
+    secondary: 'var(--bs-secondary-color)',
+    disabled: 'var(--bs-tertiary-color)',
+  },
+  background: { default: 'var(--bs-body-bg)' },
+  context: { background: 'var(--bs-primary)', text: 'var(--bs-white)' },
+  divider: { default: 'var(--bs-border-color)' },
+  button: {
+    default: 'var(--bs-body-color)',
+    hover: 'var(--bs-tertiary-bg)',
+    focus: 'var(--bs-tertiary-bg)',
+    disabled: 'var(--bs-secondary-color)',
+  },
+  selected: { default: 'var(--bs-tertiary-bg)', text: 'var(--bs-body-color)' },
+  highlightOnHover: { default: 'var(--bs-tertiary-bg)', text: 'var(--bs-body-color)' },
+  striped: { default: 'var(--bs-secondary-bg)', text: 'var(--bs-body-color)' },
+};
 
 export class Players extends Component<PlayersProps, PlayersState> {
   constructor(props: PlayersProps) {
@@ -282,11 +304,6 @@ export class Players extends Component<PlayersProps, PlayersState> {
       );
     });
 
-    let tableTheme = '';
-    if (document?.querySelector('html')?.getAttribute('data-bs-theme') === 'dark') {
-      tableTheme = 'dark';
-    }
-
     return (
       <>
         <Container fluid>
@@ -301,7 +318,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
               {filterRow}
               <Row>
                 <DataTable
-                  theme={tableTheme}
+                  theme={bootstrapTableTheme}
                   data={filteredPlayers}
                   columns={columns}
                   pagination
