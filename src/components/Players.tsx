@@ -49,6 +49,8 @@ const bootstrapTableTheme: Partial<Theme> = {
   striped: { default: 'var(--bs-secondary-bg)', text: 'var(--bs-body-color)' },
 };
 
+const ADP_ENABLED = false;
+
 export class Players extends Component<PlayersProps, PlayersState> {
   constructor(props: PlayersProps) {
     super(props);
@@ -220,7 +222,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
       defaultSortAsc = false;
     }
 
-    const columns: TableColumn<Player>[] = [
+    let columns: TableColumn<Player>[] = [
       {
         name: 'Player',
         selector: (row: Player) => row.lastname,
@@ -258,12 +260,19 @@ export class Players extends Component<PlayersProps, PlayersState> {
         selector: (row: Player) => row.byeweek,
         width: '10%',
       },
-      {
-        name: 'ADP',
-        selector: (row: Player) => row.avgpick,
-        sortable: true,
-        width: '11%',
-      },
+    ];
+
+    if (ADP_ENABLED) {
+      columns = columns.concat([
+        {
+          name: 'ADP',
+          selector: (row: Player) => row.avgpick,
+          sortable: true,
+          width: '11%',
+        },
+      ]);
+    }
+    columns = columns.concat([
       {
         name: 'Pick #',
         id: 'pickNo',
@@ -294,7 +303,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
           );
         },
       },
-    ];
+    ]);
 
     const teamRows = teams.map((team, idx) => {
       return (
