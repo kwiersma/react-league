@@ -8,11 +8,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v6
-      - uses: voidzero-dev/setup-vp@v1
+      - uses: voidzero-dev/setup-vp@v1.18.0
         with:
           node-version: '22'
           cache: true
-          version: '0.1.16'
           run-install: false
       - run: npm ci
       - run: npm run ci-build
