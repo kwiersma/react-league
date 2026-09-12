@@ -19,6 +19,7 @@ interface PlayersState {
   selectedTeamID?: string;
   currentRound: number;
   currentPick: number;
+  picks: Pick[];
 }
 
 interface PlayersProps {
@@ -78,29 +79,26 @@ export class Players extends Component<PlayersProps, PlayersState> {
       selectedTeamID: currentTeamID,
       currentRound: 1,
       currentPick: 1,
+      picks: props.picks,
     };
   }
 
-  componentDidUpdate(
-    prevProps: Readonly<PlayersProps>,
-    prevState: Readonly<PlayersState>,
-    snapshot?: any,
-  ): void {
-    if (prevProps.picks !== this.props.picks) {
-      let currentTeamID = this.determineCurrentTeamID();
-      let currentRound = 0;
-      let currentPick = 0;
-      if (this.props.picks.length > 0) {
-        currentTeamID = this.props.picks[0].fantasyteam_id;
-        currentRound = this.props.picks[0].round;
-        currentPick = this.props.picks[0].pick;
-      }
-      this.setState({
-        currentPick: currentPick,
-        currentRound: currentRound,
-        selectedTeamID: currentTeamID,
-      });
+  static getDerivedStateFromProps(
+    props: Readonly<PlayersProps>,
+    state: Readonly<PlayersState>,
+  ): Partial<PlayersState> | null {
+    if (props.picks === state.picks) {
+      return null;
     }
+    let currentTeamID = Players.computeCurrentTeamID(props.picks, props.teams);
+    let currentRound = 0;
+    let currentPick = 0;
+    if (props.picks.length > 0) {
+      currentTeamID = props.picks[0].fantasyteam_id;
+      currentRound = props.picks[0].round;
+      currentPick = props.picks[0].pick;
+    }
+    return { picks: props.picks, selectedTeamID: currentTeamID, currentRound, currentPick };
   }
 
   getUrlParamByName(name: string): string {
@@ -115,8 +113,7 @@ export class Players extends Component<PlayersProps, PlayersState> {
     this.setState({ playersFilter });
   };
 
-  private determineCurrentTeamID(): string {
-    const { picks, teams } = this.props;
+  private static computeCurrentTeamID(picks: Pick[], teams: FantasyTeam[]): string {
     let currentTeamID = '';
     if (picks.length > 0 && picks[0].fantasyteam_id !== '') {
       currentTeamID = picks[0].fantasyteam_id;
@@ -124,6 +121,10 @@ export class Players extends Component<PlayersProps, PlayersState> {
       currentTeamID = teams[0].id.toString();
     }
     return currentTeamID;
+  }
+
+  private determineCurrentTeamID(): string {
+    return Players.computeCurrentTeamID(this.props.picks, this.props.teams);
   }
 
   private filterPlayers = (): Player[] => {

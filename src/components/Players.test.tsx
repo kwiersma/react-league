@@ -241,4 +241,26 @@ describe('Players', () => {
       expect(screen.queryByText('Edit')).not.toBeInTheDocument();
     });
   });
+
+  describe('picks prop updates', () => {
+    beforeEach(() => {
+      setUrlSearch('?iseditmode=1');
+    });
+
+    it('updates round, pick, and selected team when the picks prop changes', () => {
+      const { rerender } = render(<Players players={players} teams={teams} picks={picks} />);
+
+      const newPicks = [
+        createPick({ fantasyteam: 'Lions', fantasyteam_id: '2', owner: 'Bob', round: 2, pick: 5 }),
+      ];
+      rerender(<Players players={players} teams={teams} picks={newPicks} />);
+
+      const editButtons = screen.getAllByText('Edit');
+      fireEvent.click(editButtons[0]);
+
+      const modal = screen.getByRole('dialog');
+      expect(modal.textContent).toContain('2 - 5');
+      expect(within(modal).getByRole('combobox')).toHaveValue('2');
+    });
+  });
 });
