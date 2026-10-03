@@ -1,6 +1,6 @@
 import { render, fireEvent, screen, within } from '@testing-library/react';
 import * as React from 'react';
-import { afterEach, beforeEach, describe, it, expect, vi } from 'vitest';
+import { afterEach, beforeEach, describe, it, expect, vi } from 'vite-plus/test';
 
 import { draftAPI } from '../api';
 import { createFantasyTeam, createPick, createPlayer } from '../test/factories';
@@ -239,6 +239,28 @@ describe('Players', () => {
     it('does not show Edit buttons when not in edit mode', () => {
       render(<Players players={players} teams={teams} picks={picks} />);
       expect(screen.queryByText('Edit')).not.toBeInTheDocument();
+    });
+  });
+
+  describe('picks prop updates', () => {
+    beforeEach(() => {
+      setUrlSearch('?iseditmode=1');
+    });
+
+    it('updates round, pick, and selected team when the picks prop changes', () => {
+      const { rerender } = render(<Players players={players} teams={teams} picks={picks} />);
+
+      const newPicks = [
+        createPick({ fantasyteam: 'Lions', fantasyteam_id: '2', owner: 'Bob', round: 2, pick: 5 }),
+      ];
+      rerender(<Players players={players} teams={teams} picks={newPicks} />);
+
+      const editButtons = screen.getAllByText('Edit');
+      fireEvent.click(editButtons[0]);
+
+      const modal = screen.getByRole('dialog');
+      expect(modal.textContent).toContain('2 - 5');
+      expect(within(modal).getByRole('combobox')).toHaveValue('2');
     });
   });
 });

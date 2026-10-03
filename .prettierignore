@@ -1,0 +1,6 @@
+# Managed by npm — exclude from Oxfmt to avoid conflicts with npm's own JSON formatting
+package.json
+package-lock.json
+
+# Security-sensitive workflow — must match master exactly for claude-code-action validation
+.github/workflows/claude-code-review.yml
