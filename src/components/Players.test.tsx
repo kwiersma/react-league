@@ -1,6 +1,6 @@
 import { render, fireEvent, screen, within } from '@testing-library/react';
 import * as React from 'react';
-import { afterEach, beforeEach, describe, it, expect, vi } from 'vitest';
+import { afterEach, beforeEach, describe, it, expect, vi } from 'vite-plus/test';
 
 import { draftAPI } from '../api';
 import { createFantasyTeam, createPick, createPlayer } from '../test/factories';
