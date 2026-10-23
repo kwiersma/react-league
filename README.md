@@ -12,7 +12,7 @@ Fantasy football draft management frontend built with React + TypeScript + Vite.
 Install dependencies:
 
 ```bash
-npm install
+npx vp install
 ```
 
 Start the dev server (port 5173, proxies `/api2` to `http://127.0.0.1:8000`):
