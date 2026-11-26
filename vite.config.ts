@@ -1,5 +1,5 @@
 import react from '@vitejs/plugin-react';
-import { defineConfig } from 'vitest/config';
+import { defineConfig } from 'vite-plus';
 
 export default defineConfig({
   build: {
@@ -9,7 +9,9 @@ export default defineConfig({
         // Output to the static directory instead of assets
         // FMI: https://stackoverflow.com/a/72024201
         assetFileNames: (assetInfo) => {
-          const info = assetInfo.name.split('.');
+          // Rolldown may pass undefined name for internally generated CSS assets
+          const name = assetInfo.name ?? (assetInfo.names && assetInfo.names[0]) ?? '';
+          const info = name.split('.');
           let extType = info[info.length - 1];
           if (/png|jpe?g|svg|gif|tiff|bmp|ico/i.test(extType)) {
             extType = 'img';
@@ -37,5 +39,21 @@ export default defineConfig({
         rewrite: (path) => path.replace(/^\/api2/, ''),
       },
     },
+  },
+  lint: {
+    rules: {
+      'no-unused-vars': 'off',
+    },
+    plugins: ['react', 'jest', 'typescript'],
+    env: {
+      browser: true,
+    },
+  },
+  fmt: {
+    printWidth: 110,
+    singleQuote: true,
+    tabWidth: 2,
+    trailingComma: 'all',
+    semi: true,
   },
 });

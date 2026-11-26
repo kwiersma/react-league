@@ -1,6 +1,6 @@
 import { render, fireEvent, screen } from '@testing-library/react';
 import * as React from 'react';
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect, vi } from 'vite-plus/test';
 
 import { PlayerFilter, PlayersFilter } from './PlayerFilter';
 
